@@ -9,6 +9,10 @@
 </p>
 
 <p align="center">
+  <strong>Live website at: https://aaluxe.netlify.app/</strong>
+</p>
+
+<p align="center">
   A premium accommodation discovery interface focused on curated stays, destinations, personalized collections, and streamlined property management.
 </p>
 
