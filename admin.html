@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — AALUXE</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Mobile-Responsive Structural Layout System */
+    .admin-header {
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      border-bottom: 1px solid #e8dec9; 
+      padding-bottom: 20px; 
+      margin-bottom: 40px;
+    }
+    .admin-layout-grid {
+      display: grid; 
+      grid-template-columns: 320px 1fr 300px; 
+      gap: 30px; 
+      align-items: start;
+    }
+    .form-box, .directory-box, .taxonomy-box {
+      background: #fff; 
+      border: 1px solid #e8dec9; 
+      padding: 25px; 
+      border-radius: 4px;
+    }
+    .taxonomy-wrapper {
+      display: flex; 
+      flex-direction: column; 
+      gap: 30px;
+    }
+
+    /* Tablet and Mobile Screen Breakpoints */
+    @media (max-width: 1100px) {
+      .admin-layout-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+      .taxonomy-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+      .admin-header a {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+      }
+      .taxonomy-wrapper {
+        grid-template-columns: 1fr;
+      }
+      .form-box, .directory-box, .taxonomy-box {
+        padding: 15px;
+      }
+    }
+  </style>
+
+  <script>
+    // SECURE GUARD: Evaluated globally prior to DOM rendering
+    (function() {
+      const userData = JSON.parse(localStorage.getItem('aaluxe_user'));
+      const ADMIN_EMAILS = ['aaluxe0509@gmail.com', 'dailykarma1910@gmail.com']; 
+      
+      if (!userData || !ADMIN_EMAILS.includes(userData.email)) {
+        window.addEventListener('DOMContentLoaded', () => {
+          if (typeof premiumAlert === 'function') {
+            premiumAlert("Access Denied: Administrative privileges required.", "Security Guard");
+          } else {
+            alert("Access Denied: Administrative privileges required.");
+          }
+          
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 2500);
+        });
+      }
+    })();
+  </script>
+</head>
+<body style="background: #fcfaf6; font-family: 'Montserrat', sans-serif;">
+
+<div class="container" style="max-width: 1400px; margin: 40px auto; padding: 0 20px;">
+  <!-- HEADER -->
+  <div class="admin-header">
+    <div>
+      <h1 style="font-family: 'Cormorant Garamond', serif; font-size: 36px; color: #111; margin: 0 0 5px 0;">AALUXE Management Console</h1>
+      <p style="font-size: 13px; color: #666; margin: 0;">Curate luxury properties, taxonomies, and regional tags instantly.</p>
+    </div>
+    <a href="index.html" class="btn-outline" style="padding: 10px 20px; text-decoration: none; font-size: 13px; display: inline-block;">View Live Site</a>
+  </div>
+
+  <!-- Main Multi-Column Layout Grid -->
+  <div class="admin-layout-grid">
+    
+    <!-- LEFT COLUMN: PROPERTY CAPTURE ENTRY FORM -->
+    <div class="form-box">
+      <h3 id="formTitle" style="font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 20px; color: #111; margin-top: 0;">Add New Property</h3>
+      
+      <form id="propertyForm" style="display: flex; flex-direction: column; gap: 15px;">
+        <input type="hidden" id="propertyId">
+        
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+          <label style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #888;">Property Name</label>
+          <input type="text" id="propName" required style="padding: 10px; border: 1px solid #e8dec9; border-radius: 4px; font-family: inherit;">
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+          <label style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #888;">Location Tag</label>
+          <select id="propLocation" required style="padding: 10px; border: 1px solid #e8dec9; border-radius: 4px; background:#fff; font-family: inherit;">
+            <option value="">Select Location</option>
+          </select>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+          <label style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #888;">Stay Type</label>
+          <select id="propType" required style="padding: 10px; border: 1px solid #e8dec9; border-radius: 4px; background:#fff; font-family: inherit;">
+            <option value="">Select Stay Type</option>
+          </select>
+        </div>
+
+        <!-- DYNAMIC CONFIGURATION ROW: INJECTED BHK WRAPPER FIELD -->
+        <div id="bhkFieldWrapper" style="display: none; flex-direction: column; gap: 5px;">
+          <label style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #c5a880;">Villa Size (BHK)</label>
+          <select id="propBhk" style="padding: 10px; border: 1px solid #c5a880; border-radius: 4px; background:#fff; font-family: inherit;">
+            <option value="">Select BHK Count</option>
+          </select>
+        </div>
+
+        <!-- PREMIUM IMAGE URL INPUT SECTION -->
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+          <label style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #888;">Image URL</label>
+          <input type="url" id="propImage" placeholder="https://images.unsplash.com/..." required style="padding: 10px; border: 1px solid #e8dec9; border-radius: 4px; font-family: inherit;">
+          
+          <!-- URL Live Image Preview Box -->
+          <img id="imagePreview" src="" style="display: none; width: 100%; height: 120px; object-fit: cover; margin-top: 8px; border-radius: 4px; border: 1px solid #e8dec9;">
+        </div>
+
+        <button type="submit" class="btn-gold" style="width: 100%; padding: 12px; margin-top: 10px; border: none; cursor: pointer; font-weight: 500; font-family: inherit;">
+          Save Property Entry
+        </button>
+        <button type="button" id="btnCancelEdit" style="display: none; background: none; border: none; color: #dc3545; cursor: pointer; font-size: 12px; text-align: center; margin-top: 5px; font-family: inherit;">Cancel Editing</button>
+      </form>
+    </div>
+
+    <!-- MIDDLE COLUMN: LIVE DATA MASTER DIRECTORY -->
+    <div class="directory-box">
+      <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 20px; color: #111; margin-top: 0;">Current Live Directory</h3>
+      
+      <div style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+        <table style="width: 100%; min-width: 500px; border-collapse: collapse; text-align: left; font-size: 14px;">
+          <thead>
+            <tr style="border-bottom: 2px solid #e8dec9; color: #888; font-size: 12px; text-transform: uppercase;">
+              <th style="padding: 12px 8px;">Preview</th>
+              <th style="padding: 12px 8px;">Details</th>
+              <th style="padding: 12px 8px;">Location</th>
+              <th style="padding: 12px 8px; text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="adminTableBody">
+            <!-- Dynamic Rows dropped here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: TAXONOMY SUB-MANAGEMENT -->
+    <div class="taxonomy-wrapper">
+      
+      <!-- Manage Locations Grid Layer -->
+      <div class="taxonomy-box">
+        <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 18px; margin-bottom: 12px; color: #111; margin-top: 0;">Manage Locations</h4>
+        <form id="locationTaxonomyForm" style="display: flex; gap: 8px; margin-bottom: 15px;">
+          <input type="text" id="newLocationName" placeholder="e.g., Alibaug" required style="flex:1; padding: 8px; border: 1px solid #e8dec9; border-radius: 4px; font-size: 13px; font-family: inherit; min-width: 0;">
+          <button type="submit" style="background: #c5a880; color: #fff; border: none; padding: 8px 12px; cursor: pointer; border-radius: 4px; font-size: 13px; font-family: inherit;">+</button>
+        </form>
+        <ul id="locationTaxonomyList" style="list-style: none; padding: 0; margin: 0; max-height: 180px; overflow-y: auto; font-size: 13px;">
+          <!-- Active location list items fall here -->
+        </ul>
+      </div>
+
+      <!-- Manage Stay Types Grid Layer -->
+      <div class="taxonomy-box">
+        <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 18px; margin-bottom: 12px; color: #111; margin-top: 0;">Manage Stay Types</h4>
+        <form id="typeTaxonomyForm" style="display: flex; gap: 8px; margin-bottom: 15px;">
+          <input type="text" id="newTypeName" placeholder="e.g., Glasshouse" required style="flex:1; padding: 8px; border: 1px solid #e8dec9; border-radius: 4px; font-size: 13px; font-family: inherit; min-width: 0;">
+          <button type="submit" style="background: #c5a880; color: #fff; border: none; padding: 8px 12px; cursor: pointer; border-radius: 4px; font-size: 13px; font-family: inherit;">+</button>
+        </form>
+        <ul id="typeTaxonomyList" style="list-style: none; padding: 0; margin: 0; max-height: 180px; overflow-y: auto; font-size: 13px;">
+          <!-- Active type list items fall here -->
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- PREMIUM CUSTOM DYNAMIC ALERT OVERLAY -->
+<div id="customAlertOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 100000; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(3px);">
+  <div style="background: #ffffff; border: 1px solid #c5a880; max-width: 420px; width: 100%; padding: 35px 30px; border-radius: 4px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.15); animation: alertFadeIn 0.25s ease;">
+    <div style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #111; margin-bottom: 12px; font-weight: 400; letter-spacing: 0.5px;" id="customAlertTitle">System Notification</div>
+    <div style="font-family: 'Montserrat', sans-serif; font-size: 13px; line-height: 1.6; color: #555; margin-bottom: 25px;" id="customAlertMessage"></div>
+    <button onclick="closeCustomAlert()" class="btn-gold" style="min-width: 120px; padding: 10px 24px; border: none; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer;">Acknowledge</button>
+  </div>
+</div>
+
+<style>
+  @keyframes alertFadeIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+  }
+</style>
+
+<!-- Firebase Modular Database Setup -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDmHDMcsngn63fqO9ya-w60WoWl5m8Rl7k",
+    authDomain: "aaluxe-1627d.firebaseapp.com",
+    projectId: "aaluxe-1627d",
+    storageBucket: "aaluxe-1627d.firebasestorage.app", 
+    messagingSenderId: "1005965760649",
+    appId: "1:1005965760649:web:2c9817725f393988e30e58",
+    measurementId: "G-MVBZQXC58M"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const propertiesRef = collection(db, "properties");
+  const locationsRef = collection(db, "locations");
+  const typesRef = collection(db, "types");
+
+  const form = document.getElementById('propertyForm');
+  const tableBody = document.getElementById('adminTableBody');
+  const cancelBtn = document.getElementById('btnCancelEdit');
+  const propLocationSelect = document.getElementById('propLocation');
+  const propTypeSelect = document.getElementById('propType');
+  
+  const bhkFieldWrapper = document.getElementById('bhkFieldWrapper');
+  const propBhkSelect = document.getElementById('propBhk');
+
+  const locationTaxonomyForm = document.getElementById('locationTaxonomyForm');
+  const locationTaxonomyList = document.getElementById('locationTaxonomyList');
+  const typeTaxonomyForm = document.getElementById('typeTaxonomyForm');
+  const typeTaxonomyList = document.getElementById('typeTaxonomyList');
+
+  let currentLocations = [];
+  let currentTypes = [];
+
+  // CUSTOM LUXURY ALERT ENGINE
+  window.premiumAlert = function(message, title = "System Notification") {
+    const overlay = document.getElementById('customAlertOverlay');
+    const titleNode = document.getElementById('customAlertTitle');
+    const messageNode = document.getElementById('customAlertMessage');
+    
+    if (!overlay || !messageNode) {
+      alert(message);
+      return;
+    }
+    titleNode.textContent = title;
+    messageNode.textContent = message;
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeCustomAlert = function() {
+    const overlay = document.getElementById('customAlertOverlay');
+    if (overlay) {
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  };
+
+  // Populate BHK options explicitly from 2 to 20 BHK
+  for (let i = 2; i <= 20; i++) {
+    const opt = document.createElement('option');
+    opt.value = `${i} BHK`;
+    opt.textContent = `${i} BHK`;
+    propBhkSelect.appendChild(opt);
+  }
+
+  // Helper logic function to manage dynamic BHK showing visibility parameters
+  function syncBhkVisibility() {
+    if (propTypeSelect.value.toLowerCase() === 'villa') {
+      bhkFieldWrapper.style.display = 'flex';
+      propBhkSelect.setAttribute('required', 'true');
+    } else {
+      bhkFieldWrapper.style.display = 'none';
+      propBhkSelect.removeAttribute('required');
+      propBhkSelect.value = '';
+    }
+  }
+
+  // Toggle BHK Display dynamically depending on the selected category field values
+  propTypeSelect.addEventListener('change', () => {
+    syncBhkVisibility();
+    saveFormDraft();
+  });
+
+  // Track live changes on URL input to show instant preview box
+  document.getElementById('propImage').addEventListener('input', function(e) {
+    const url = e.target.value.trim();
+    const preview = document.getElementById('imagePreview');
+    if (url) {
+      preview.src = url;
+      preview.style.display = 'block';
+    } else {
+      preview.style.display = 'none';
+    }
+    saveFormDraft();
+  });
+
+  // LOCAL DRAFT ENGINE ACTION HOOKS: Track form inputs to storage cache objects
+  ['propName', 'propLocation', 'propBhk'].forEach(fieldId => {
+    document.getElementById(fieldId).addEventListener('input', saveFormDraft);
+  });
+
+  function saveFormDraft() {
+    // Only back up standard creation drafts (Do not overwrite active cloud edits)
+    if (document.getElementById('propertyId').value) return;
+
+    const draft = {
+      name: document.getElementById('propName').value,
+      location: propLocationSelect.value,
+      type: propTypeSelect.value,
+      bhk: propBhkSelect.value,
+      image: document.getElementById('propImage').value
+    };
+    localStorage.setItem('aaluxe_property_draft', JSON.stringify(draft));
+  }
+
+  function loadFormDraft() {
+    if (document.getElementById('propertyId').value) return; // Do not interrupt edits
+
+    const savedDraft = localStorage.getItem('aaluxe_property_draft');
+    if (!savedDraft) return;
+
+    try {
+      const draft = JSON.parse(savedDraft);
+      if (draft.name) document.getElementById('propName').value = draft.name;
+      if (draft.type) propTypeSelect.value = draft.type;
+      
+      // Sync BHK input visibility prior to mapping the value variant out
+      syncBhkVisibility();
+      if (draft.bhk) propBhkSelect.value = draft.bhk;
+      if (draft.image) {
+        document.getElementById('propImage').value = draft.image;
+        const preview = document.getElementById('imagePreview');
+        preview.src = draft.image;
+        preview.style.display = 'block';
+      }
+
+      // Check to confirm current dynamic array is loaded before setting up custom placement values
+      if (draft.location && currentLocations.some(l => l.name === draft.location)) {
+        propLocationSelect.value = draft.location;
+      } else if (draft.location) {
+        // Fallback catch if snapshot arrays aren't loaded into local stack yet
+        const checkInterval = setInterval(() => {
+          if (currentLocations.some(l => l.name === draft.location)) {
+            propLocationSelect.value = draft.location;
+            clearInterval(checkInterval);
+          }
+        }, 100);
+        setTimeout(() => clearInterval(checkInterval), 3000); // Fail-safe limit clear
+      }
+    } catch (err) {
+      console.error("Error parsing form snapshot data: ", err);
+    }
+  }
+
+  // 1. LIVE TAXONOMY LISTENER: LOCATIONS
+  onSnapshot(locationsRef, (snapshot) => {
+    currentLocations = [];
+    propLocationSelect.innerHTML = '<option value="">Select Location</option>';
+    locationTaxonomyList.innerHTML = '';
+    
+    snapshot.forEach((docInstance) => {
+      const data = docInstance.data();
+      const id = docInstance.id;
+      currentLocations.push({ id, name: data.name });
+
+      const option = document.createElement('option');
+      option.value = data.name;
+      option.textContent = data.name;
+      propLocationSelect.appendChild(option);
+
+      locationTaxonomyList.innerHTML += `
+        <li style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px dashed #f0eadd;">
+          <span>${data.name}</span>
+          <button onclick="deleteTaxonomyItem('locations', '${id}')" style="background:none; border:none; color:#dc3545; cursor:pointer; font-weight:600; font-size:11px; font-family:inherit;">Remove</button>
+        </li>`;
+    });
+    // Hydrate state updates out of storage if applicable
+    loadFormDraft();
+  });
+
+  // 2. LIVE TAXONOMY LISTENER: STAY TYPES
+  onSnapshot(typesRef, (snapshot) => {
+    currentTypes = [];
+    propTypeSelect.innerHTML = '<option value="">Select Stay Type</option>';
+    typeTaxonomyList.innerHTML = '';
+    
+    snapshot.forEach((docInstance) => {
+      const data = docInstance.data();
+      const id = docInstance.id;
+      currentTypes.push({ id, name: data.name });
+
+      const option = document.createElement('option');
+      option.value = data.name;
+      option.textContent = data.name;
+      propTypeSelect.appendChild(option);
+
+      typeTaxonomyList.innerHTML += `
+        <li style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px dashed #f0eadd;">
+          <span>${data.name}</span>
+          <button onclick="deleteTaxonomyItem('types', '${id}')" style="background:none; border:none; color:#dc3545; cursor:pointer; font-weight:600; font-size:11px; font-family:inherit;">Remove</button>
+        </li>`;
+    });
+    // Hydrate state updates out of storage if applicable
+    loadFormDraft();
+  });
+
+  // 3. REALTIME PROPERTIES LISTENER
+  onSnapshot(propertiesRef, (snapshot) => {
+    tableBody.innerHTML = '';
+    snapshot.forEach((documentInstance) => {
+      const p = documentInstance.data();
+      const id = documentInstance.id;
+      
+      const subInfoText = p.bhk ? `${p.type} &middot; ${p.bhk}` : p.type;
+
+      tableBody.innerHTML += `
+        <tr style="border-bottom: 1px solid #f0eadd;">
+          <td style="padding: 12px 8px;"><img src="${p.image}" style="width: 60px; height: 40px; object-fit: cover; border-radius: 2px; border: 1px solid #e8dec9;"></td>
+          <td style="padding: 12px 8px;">
+            <div style="font-weight: 600; color: #111;">${p.name}</div>
+            <div style="font-size: 11px; color: #888;">${subInfoText}</div>
+          </td>
+          <td style="padding: 12px 8px; color: #555;">${p.location}</td>
+          <td style="padding: 12px 8px; text-align: right; white-space: nowrap;">
+            <button onclick="setupEditForm('${id}', '${p.name.replace(/'/g, "\\'")}', '${p.location.replace(/'/g, "\\'")}', '${p.type.replace(/'/g, "\\'")}', '${p.image}', '${p.bhk || ''}')" style="background: none; border: none; color: #c5a880; font-weight: 600; cursor: pointer; margin-right: 10px; font-family:inherit;">Edit</button>
+            <button onclick="deletePropertyEntry('${id}')" style="background: none; border: none; color: #dc3545; font-weight: 600; cursor: pointer; font-family:inherit;">Delete</button>
+          </td>
+        </tr>
+      `;
+    });
+  });
+
+  // 4. MAIN PROPERTY RECORD SUBMIT HANDLER (DIRECT URL STORAGE)
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('propertyId').value;
+    const isVilla = propTypeSelect.value.toLowerCase() === 'villa';
+    const imageUrl = document.getElementById('propImage').value.trim();
+
+    if (!imageUrl) {
+      premiumAlert("Please enter a valid public image URL destination.", "Validation Error");
+      return;
+    }
+    
+    const payload = {
+      name: document.getElementById('propName').value,
+      location: propLocationSelect.value,
+      type: propTypeSelect.value,
+      image: imageUrl
+    };
+
+    if (isVilla) {
+      payload.bhk = propBhkSelect.value;
+    } else {
+      payload.bhk = ""; 
+    }
+
+    try {
+      if (id) {
+        await updateDoc(doc(db, "properties", id), payload);
+        premiumAlert("Property details updated successfully.", "Success");
+      } else {
+        await addDoc(propertiesRef, payload);
+        premiumAlert("New premium property saved safely to database archive.", "Success");
+      }
+      // WIPE LOCAL DRAFT DATA CLEANLY ON SUCCESSFUL DEPLOYMENT WRITE
+      localStorage.removeItem('aaluxe_property_draft');
+      resetFormState();
+    } catch(err) {
+      console.error("Error modifying property record: ", err);
+      premiumAlert("Failed to save property entry. Check console terminal logs.", "Error");
+    }
+  });
+
+  // 5. TAXONOMY ADD MUTATIONS
+  locationTaxonomyForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const nameInput = document.getElementById('newLocationName');
+    const name = nameInput.value.trim();
+    if(!name) return;
+    try {
+      await addDoc(locationsRef, { name });
+      nameInput.value = '';
+    } catch(err) { console.error("Error adding location tag: ", err); }
+  });
+
+  typeTaxonomyForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const nameInput = document.getElementById('newTypeName');
+    const name = nameInput.value.trim();
+    if(!name) return;
+    try {
+      await addDoc(typesRef, { name });
+      nameInput.value = '';
+    } catch(err) { console.error("Error adding stay type selector: ", err); }
+  });
+
+  // 6. GLOBAL WINDOW EXPOSURES FOR INLINE COMPONENT ACTIONS
+  window.setupEditForm = (id, name, location, type, image, bhk) => {
+    document.getElementById('propertyId').value = id;
+    document.getElementById('propName').value = name;
+    propLocationSelect.value = location;
+    propTypeSelect.value = type;
+    document.getElementById('propImage').value = image;
+    
+    const preview = document.getElementById('imagePreview');
+    if (image) {
+      preview.src = image;
+      preview.style.display = 'block';
+    } else {
+      preview.style.display = 'none';
+    }
+    
+    if (type.toLowerCase() === 'villa') {
+      bhkFieldWrapper.style.display = 'flex';
+      propBhkSelect.setAttribute('required', 'true');
+      propBhkSelect.value = bhk || '';
+    } else {
+      bhkFieldWrapper.style.display = 'none';
+      propBhkSelect.removeAttribute('required');
+      propBhkSelect.value = '';
+    }
+    
+    document.getElementById('formTitle').textContent = "Modify Property Details";
+    cancelBtn.style.display = "inline-block";
+  };
+
+  window.deletePropertyEntry = async (id) => {
+    if (confirm("Permanently drop this stay profile from the cloud archive database?")) {
+      try {
+        await deleteDoc(doc(db, "properties", id));
+      } catch(err) { console.error("Error deleting property record: ", err); }
+    }
+  };
+
+  window.deleteTaxonomyItem = async (collectionName, id) => {
+    if (confirm(`Drop this classification tag value variant from the admin index configuration profiles?`)) {
+      try {
+        await deleteDoc(doc(db, collectionName, id));
+      } catch(err) { console.error(`Error deleting element from collection ${collectionName}: `, err); }
+    }
+  };
+
+  cancelBtn.addEventListener('click', () => {
+    // Clear dynamic session markers on rollback actions cleanly
+    localStorage.removeItem('aaluxe_property_draft');
+    resetFormState();
+  });
+
+  function resetFormState() {
+    document.getElementById('propertyId').value = '';
+    document.getElementById('formTitle').textContent = "Add New Property";
+    cancelBtn.style.display = "none";
+    bhkFieldWrapper.style.display = 'none';
+    propBhkSelect.removeAttribute('required');
+    
+    const preview = document.getElementById('imagePreview');
+    preview.src = '';
+    preview.style.display = 'none';
+    
+    form.reset();
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Cart — AALUXE</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo contrast-logo">
+      <span class="logo-a" style="color: #c5a880;">A</span>ALUXE
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="nav-link contrast-text">Home</a></li>
+      <li><a href="listings.html" class="nav-link contrast-text">Stays</a></li>
+      <!-- Placed perfectly within core content pages -->
+      <li><a href="about.html" class="nav-link contrast-text">About</a></li>
+      <li><a href="favorites.html" class="nav-link contrast-text">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        Saved <span class="fav-badge contrast-text" id="favBadge">0</span>
+      </a></li>
+      <li><a href="cart.html" class="nav-link contrast-text">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        Cart <span class="cart-badge contrast-text" id="cartBadge">0</span>
+      </a></li>
+      <li><a href="profile.html" class="nav-link contrast-text" id="profileNavLink">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        Profile
+      </a></li>
+      <!-- Hidden Admin Console option for dynamic UI execution -->
+      <li id="adminConsoleLink" style="display: none;"><a href="admin.html" class="nav-link contrast-text" style="color: #c5a880; font-weight: 600;">Console</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <p class="page-eyebrow">Your Selection</p>
+    <h1>My Cart</h1>
+  </div>
+</div>
+
+<div class="cart-page container">
+  <div class="cart-main-wrapper" style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
+    <!-- Dynamic Clear Box Row placed cleanly above items list -->
+    <div id="cartHeaderActions" style="display: flex; justify-content: flex-end;"></div>
+    <div class="cart-items" id="cartItems" style="width: 100%;"></div>
+  </div>
+  <aside class="cart-summary" id="cartSummary"></aside>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="logo logo--light"><span class="logo-a">A</span>ALUXE</a>
+      <p>Luxury stays at unbeatable prices.</p>
+    </div>
+    <div class="footer-links">
+      <h5>Contact</h5>
+      <a href="https://wa.me/9819893157" target="_blank">WhatsApp</a>
+      <a href="tel:+9819893157">+91 98198 93157</a>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 AALUXE. All rights reserved.</p></div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  initCart();
+  updateBadges();
+</script>
+</body>
+</html>

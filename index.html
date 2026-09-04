@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AALUXE — Luxury Stays, Unbeatable Prices</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .contrast-text {
+      color: #ffffff !important;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.75), 0px 0px 4px rgba(0, 0, 0, 0.4);
+    }
+    .hero-eyebrow.contrast-text {
+      letter-spacing: 3px;
+      font-weight: 600;
+    }
+    .hero-sub.contrast-text {
+      font-weight: 500;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 6px 12px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .nav-link.contrast-nav {
+      color: #ffffff !important;
+      font-weight: 600;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+    }
+    .nav-link.contrast-nav svg {
+      stroke: #ffffff !important;
+      filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.8));
+    }
+    .logo.contrast-logo {
+      color: #ffffff !important;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+    }
+    .explicit-scroll-guide {
+      margin-top: 25px;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.9);
+      animation: bounceIndicator 2s infinite;
+      display: inline-block;
+    }
+    @keyframes bounceIndicator {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-8px); }
+      60% { transform: translateY(-4px); }
+    }
+    .credentials-slide {
+      background: linear-gradient(135deg, #111111, #1c1a17);
+      color: #f4ebd9;
+      padding: 40px 0;
+      border-top: 3px solid #c5a880;
+      border-bottom: 1px solid #333333;
+      text-align: center;
+    }
+    .cred-wrapper {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .cred-item {
+      flex: 1;
+      min-width: 200px;
+      padding: 10px;
+    }
+    .cred-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      color: #c5a880;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    .cred-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #ffffff;
+    }
+    .testimonial-carousel-section {
+      padding: 60px 0;
+      background: #faf7f2;
+      overflow: hidden;
+      width: 100%;
+    }
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 0;
+    }
+    .carousel-track-wrapper {
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+    }
+    .carousel-track {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      transition: transform 850ms ease-in-out;
+      will-change: transform;
+    }
+    .carousel-slide {
+      flex: 0 0 60%;
+      min-width: 60%;
+      padding: 0 15px;
+      box-sizing: border-box;
+      opacity: 0.7;
+      transform: scale(0.92);
+      transition: transform 850ms ease-in-out, opacity 850ms ease-in-out;
+      will-change: transform, opacity;
+      z-index: 1;
+    }
+    .carousel-slide.active-slide {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 5;
+    }
+    .carousel-card-inner {
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      overflow: hidden;
+      border: 1px solid #e8dec9;
+    }
+    .carousel-card-inner img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      display: block;
+    }
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 45px;
+      height: 45px;
+      background: #ffffff;
+      border: 1px solid #c5a880;
+      color: #111111;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .carousel-arrow:hover {
+      background: #c5a880;
+      color: #ffffff;
+    }
+    .carousel-arrow.left-arrow { left: 5%; }
+    .carousel-arrow.right-arrow { right: 5%; }
+
+    /* Premium Trusted Messages Styling Layout */
+    .trusted-messages-section {
+      padding: 80px 0;
+      background: #ffffff;
+    }
+    .messages-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .message-card {
+      background: #faf7f2;
+      border: 1px solid #f0eadd;
+      padding: 35px;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+    .message-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #444;
+      white-space: pre-line;
+      margin-bottom: 20px;
+    }
+    .message-author {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #c5a880;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .message-author::before {
+      content: "—";
+      color: #c5a880;
+    }
+    @media(max-width: 768px) {
+      .carousel-slide {
+        flex: 0 0 80%;
+        min-width: 80%;
+      }
+      .carousel-card-inner img { height: 260px; }
+      .carousel-arrow.left-arrow { left: 1%; }
+      .carousel-arrow.right-arrow { right: 1%; }
+      .messages-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
+    /* ─── PARALLAX STYLES ──────────────────────────────────── */
+    .parallax-section {
+      position: relative;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      will-change: background-position;
+    }
+    .parallax-bg-1 {
+      background-image: url('bg_img_3.jpg');
+    }
+    .parallax-bg-2 {
+      background-image: url('bg_img_2.avif');
+    }
+    .parallax-bg-3 {
+      background-image: url('bg_img_1.avif');
+    }
+    .parallax-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 1;
+    }
+    .parallax-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 40px 20px;
+      max-width: 850px;
+      margin: 0 auto;
+      transition: transform 0.1s ease-out;
+    }
+    .parallax-content .parallax-eyebrow {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #c5a880;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .parallax-content .parallax-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px;
+      color: #ffffff;
+      font-weight: 400;
+      letter-spacing: 1px;
+      line-height: 1.2;
+      margin-bottom: 15px;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    }
+    .parallax-content .parallax-subtitle {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      color: #f4ebd9;
+      font-weight: 300;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+    @media(max-width: 768px) {
+      .parallax-section {
+        min-height: 280px;
+        background-attachment: scroll; /* Mobile compatibility */
+      }
+      .parallax-content .parallax-title {
+        font-size: 28px;
+      }
+      .parallax-content .parallax-subtitle {
+        font-size: 13px;
+      }
+    }
+  </style>
+  <script>
+    if (!localStorage.getItem('aaluxe_user')) {
+      window.location.href = "login.html";
+    }
+  </script>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo contrast-logo">
+      <span class="logo-a" style="color: #c5a880;">A</span>ALUXE
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="nav-link contrast-text">Home</a></li>
+      <li><a href="listings.html" class="nav-link contrast-text">Stays</a></li>
+      <li><a href="about.html" class="nav-link contrast-text">About</a></li>
+      <li><a href="favorites.html" class="nav-link contrast-text">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        Saved <span class="fav-badge contrast-text" id="favBadge">0</span>
+      </a></li>
+      <li><a href="cart.html" class="nav-link contrast-text">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        Cart <span class="cart-badge contrast-text" id="cartBadge">0</span>
+      </a></li>
+      <li><a href="profile.html" class="nav-link contrast-text" id="profileNavLink">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        Profile
+      </a></li>
+      <li id="adminConsoleLink" style="display: none;"><a href="admin.html" class="nav-link contrast-text" style="color: #c5a880; font-weight: 600;">Console</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <div class="hero-overlay" style="background: rgba(0, 0, 0, 0.25);"></div>
+    <img src="bg.avif" alt="Luxury Resort" class="hero-img" />
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow contrast-text">Welcome to AALUXE</p>
+    <h1 class="hero-headline contrast-text">Luxury stays at<br/><em style="color: #ffffff;" class="contrast-text">unbeatable prices</em></h1>
+    <p class="hero-sub contrast-text">Handpicked resorts, villas & exclusive retreats — through personal connections, for you.</p>
+    <div class="search-box" style="display: flex; align-items: center; background: #ffffff; padding: 8px; border-radius: 6px; max-width: 550px; margin: 0 auto; box-shadow: 0 15px 35px rgba(0,0,0,0.25); border: 1px solid rgba(197, 168, 128, 0.4);">
+      <div class="search-field" style="flex: 1; padding: 6px 15px; display: flex; flex-direction: column; justify-content: center; text-align: left;">
+        <label style="font-size: 10px; font-weight: 600; text-transform: uppercase; color: #888; letter-spacing: 1.5px; margin-bottom: 4px; padding: 0 0 0 4px; margin: 0;">Destination</label>
+        <select id="heroLocationSelect" style="border: none; outline: none; font-family: 'Montserrat', sans-serif; font-size: 14px; color: #111; background: transparent; width: 100%; cursor: pointer; padding: 2px 0; margin: 0;">
+          <option value="">Select Destination...</option>
+        </select>
+      </div>
+      <button class="btn-search" onclick="heroSearch()" style="background: #c5a880; color: #fff; border: none; padding: 14px 28px; font-weight: 600; border-radius: 4px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-size: 13px; transition: background 0.3s ease;">Search</button>
+    </div>
+    <div>
+      <span class="explicit-scroll-guide">↓ Scroll Down to Explore options ↓</span>
+    </div>
+  </div>
+</section>
+
+<section class="credentials-slide">
+  <div class="container cred-wrapper">
+    <div class="cred-item">
+      <div class="cred-number" id="propertyCount">0+</div>
+      <div class="cred-text">Premium Properties</div>
+    </div>
+    <div class="cred-item" style="border-left: 1px solid rgba(197, 168, 128, 0.3); border-right: 1px solid rgba(197, 168, 128, 0.3);">
+      <div class="cred-number">15-30%</div>
+      <div class="cred-text">Direct Savings Made</div>
+    </div>
+    <div class="cred-item">
+      <div class="cred-number">100%</div>
+      <div class="cred-text">Personally Vetted Stays</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PARALLAX DIVIDER 1 ─────────────────────────────────── -->
+<section class="parallax-section parallax-bg-1" data-parallax-speed="0.2">
+  <div class="parallax-overlay"></div>
+  <div class="parallax-content">
+    <div class="parallax-eyebrow">Exclusivity Defined</div>
+    <h2 class="parallax-title">Handpicked Destinations</h2>
+    <p class="parallax-subtitle">Escape to breathtaking retreats and experience hospitality crafted beyond perfection.</p>
+  </div>
+</section>
+
+<section class="testimonial-carousel-section">
+  <div class="container" style="text-align: center; margin-bottom: 30px;">
+    <div class="section-label">Verified Guest Stories</div>
+    <h2 class="section-title">Recommended by Travel Connoisseurs</h2>
+  </div>
+ 
+  <div class="carousel-stage" id="testimonialStage" style="position: relative; max-width: 1200px; margin: 0 auto; height: 420px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+    <button class="carousel-arrow left-arrow" id="prevSlideBtn" aria-label="Previous Slide" style="left: 2%;">‹</button>
+    <button class="carousel-arrow right-arrow" id="nextSlideBtn" aria-label="Next Slide" style="right: 2%;">›</button>
+   
+    <div class="testimonial-frame" style="background-image: url('1.jpeg');"></div>
+    <div class="testimonial-frame" style="background-image: url('2.jpeg');"></div>
+    <div class="testimonial-frame" style="background-image: url('4.jpeg');"></div>
+    <div class="testimonial-frame" style="background-image: url('5.png');"></div>
+    <div class="testimonial-frame" style="background-image: url('6.jpeg');"></div>
+    <div class="testimonial-frame" style="background-image: url('5.jpeg');"></div>
+  </div>
+</section>
+
+<!-- ─── PARALLAX DIVIDER 2 ─────────────────────────────────── -->
+<section class="parallax-section parallax-bg-2" data-parallax-speed="0.2">
+  <div class="parallax-overlay"></div>
+  <div class="parallax-content">
+    <div class="parallax-eyebrow">Bespoke Comfort</div>
+    <h2 class="parallax-title">Private Villas & Estates</h2>
+    <p class="parallax-subtitle">Secluded sanctuaries tailored for intimate getaways, family celebrations, and memorable reunions.</p>
+  </div>
+</section>
+
+<section class="categories">
+  <div class="container">
+    <div class="section-label">Browse by type</div>
+    <h2 class="section-title">What are you looking for?</h2>
+    <div class="cat-grid" id="dynamicCategoryGrid"></div>
+  </div>
+</section>
+
+<section class="featured">
+  <div class="container">
+    <div class="section-label">Handpicked for you</div>
+    <h2 class="section-title">Featured Stays</h2>
+    <div class="prop-grid" id="featuredGrid"></div>
+    <div class="center-btn">
+      <a href="listings.html" class="btn-outline">View All Properties</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PARALLAX DIVIDER 3 ─────────────────────────────────── -->
+<section class="parallax-section parallax-bg-3" data-parallax-speed="0.2">
+  <div class="parallax-overlay"></div>
+  <div class="parallax-content">
+    <div class="parallax-eyebrow">Direct Relations</div>
+    <h2 class="parallax-title">Unrivaled Value</h2>
+    <p class="parallax-subtitle">Connecting you directly with property owners for luxury experiences at privileged tariffs.</p>
+  </div>
+</section>
+
+<section class="trusted-messages-section">
+  <div class="container" style="text-align: center;">
+    <div class="section-label">Client Notes</div>
+    <h2 class="section-title" style="font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 400; margin-bottom: 10px;">Trusted by Our Customers</h2>
+   
+    <div class="messages-grid">
+      <div class="message-card">
+        <p class="message-text">Amee didi, thank you for booking at the Anantya resort. It's been an amazingg experience and thank you for being so patient and helping us throughout♥️
+        So thankful and glad to be doing our all our bookings with you🤗</p>
+        <div class="message-author">Verified Guest</div>
+      </div>
+      <div class="message-card">
+        <p class="message-text">A heartfelt thank you to AA Luxe for booking our amazing Thailand trip, covering the beautiful destinations of Bangkok and Krabi. 🇹🇭✨
+        The entire trip was wonderfully planned, with all the major sightseeing spots covered. The drivers were always punctual, and the smooth, comfortable commute was definitely one of the biggest USPs of the trip.
+        Everything was seamless, well-organised, and hassle-free. We truly had an unforgettable experience! ❤️✈️
+        Thank you, AA Luxe, for making our Thailand holiday so special!</p>
+        <div class="message-author">Verified Guest</div>
+      </div>
+      <div class="message-card">
+        <p class="message-text">A big thank you to AA LUXE for planning our beautiful Tamil Nadu trip covering Kanyakumari and Madurai. From seamless bookings to smooth arrangements, everything was perfectly taken care of. Thank you for all the wonderful suggestions and guidance throughout the trip. Truly appreciate the effort in making our journey so comfortable and memorable! ❤️✨</p>
+        <div class="message-author">Gauri</div>
+      </div>
+      <div class="message-card">
+        <p class="message-text">A big thank you to AA Luxe for planning our amazing Goa trip! 🌴✨
+        Everything was so beautifully organised and hassle-free.
+        From the stunning beaches to the fun-filled nights, every moment was memorable. 🌊💃
+        The perfect mix of relaxation, adventure, music, and masti! 🎶
+        Thank you for taking care of every little detail and making our trip so special.
+        We truly enjoyed every moment and created memories to cherish forever. ❤️</p>
+        <div class="message-author">Sanjana</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="why-us">
+  <div class="container">
+    <div class="section-label">Why us</div>
+    <h2 class="section-title">The AALUXE Advantage</h2>
+    <div class="why-grid">
+      <div class="why-card"><div class="why-icon">✦</div><h4>Personal Connections</h4><p>Direct relationships with resort owners means rates no app can match.</p></div>
+      <div class="why-card"><div class="why-icon">◈</div><h4>Curated Selection</h4><p>Every property is personally vetted. No algorithm, only taste.</p></div>
+      <div class="why-card"><div class="why-icon">◉</div><h4>Unbeatable Prices</h4><p>Save 20–40% compared to standard booking platforms.</p></div>
+      <div class="why-card"><div class="why-icon">◇</div><h4>Dedicated Support</h4><p>Reach us on WhatsApp anytime — before, during, or after your stay.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container contact-inner">
+    <div class="contact-text">
+      <div class="section-label">Get in touch</div>
+      <h2 class="section-title">Ready to book your perfect stay?</h2>
+      <p>Talk to us directly on WhatsApp — we'll find you the best deal, fast.</p>
+    </div>
+    <div class="contact-actions">
+      <a href="https://wa.me/9819893157?text=Hi%20AALUXE!%20I%27d%20like%20to%20book%20a%20stay." target="_blank" class="btn-whatsapp">Chat on WhatsApp</a>
+      <a href="tel:9819893157" class="btn-phone">Call Us</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="logo logo--light"><span class="logo-a">A</span>ALUXE</a>
+      <p>Luxury stays at unbeatable prices, through personal connections.</p>
+    </div>
+    <div class="footer-links" id="footerDynamicLinks">
+      <h5>Explore</h5>
+      <a href="listings.html">All Stays</a>
+    </div>
+    <div class="footer-links">
+      <h5>Account</h5>
+      <a href="favorites.html">Saved Stays</a>
+      <a href="cart.html">My Cart</a>
+    </div>
+    <div class="footer-links">
+      <h5>Contact</h5>
+      <a href="https://wa.me/9819893157" target="_blank">WhatsApp</a>
+      <a href="tel:+9819893157">+91 98198 93157</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 AALUXE. All rights reserved. Luxury Travel, Personal Touch.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDmHDMcsngn63fqO9ya-w60WoWl5m8Rl7k",
+  authDomain: "aaluxe-1627d.firebaseapp.com",
+  projectId: "aaluxe-1627d",
+  storageBucket: "aaluxe-1627d.firebasestorage.app",
+  messagingSenderId: "1005965760649",
+  appId: "1:1005965760649:web:2c9817725f393988e30e58",
+  measurementId: "G-MVBZQXC58M"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+const activeUser = JSON.parse(localStorage.getItem('aaluxe_user'));
+const ADMIN_LIST = ['aaluxe0509@gmail.com', 'dailykarma1910@gmail.com'];
+if (activeUser && ADMIN_LIST.includes(activeUser.email)) {
+  const consoleButton = document.getElementById('adminConsoleLink');
+  if (consoleButton) consoleButton.style.display = 'block';
+}
+if (typeof updateBadges === 'function') updateBadges();
+
+// Live Taxonomy: Load Hero Search Dropdown Menu Options
+onSnapshot(collection(db, "locations"), (snapshot) => {
+  const heroSelect = document.getElementById('heroLocationSelect');
+  if (!heroSelect) return;
+  heroSelect.innerHTML = '<option value="">Select Destination...</option>';
+  snapshot.forEach(doc => {
+    const name = doc.data().name;
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name;
+    heroSelect.appendChild(opt);
+  });
+});
+
+// Live Taxonomy: Build Category Cards & Footer Elements Dynamically
+onSnapshot(collection(db, "types"), (snapshot) => {
+  const grid = document.getElementById('dynamicCategoryGrid');
+  const footerLinks = document.getElementById('footerDynamicLinks');
+ 
+  if (grid) grid.innerHTML = '';
+  if (footerLinks) {
+    footerLinks.innerHTML = '<h5>Explore</h5><a href="listings.html">All Stays</a>';
+  }
+  const imageFallbacks = [
+    "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=80",
+    "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80",
+    "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&q=80"
+  ];
+  const subtextMap = {
+    'Resort': 'All-inclusive premium getaways',
+    'Villa': 'Private spaces & exclusive groups',
+    'Boutique': 'Intimate, styled, & personalized',
+    'Heritage': 'Classic architecture & rich history'
+  };
+  let checkIdx = 0;
+  snapshot.forEach(doc => {
+    const type = doc.data().name;
+    const fallbackImg = imageFallbacks[checkIdx % imageFallbacks.length];
+    checkIdx++;
+    const subtext = subtextMap[type] || `Handpicked premium ${type.toLowerCase()} stays`;
+    if (grid) {
+      grid.innerHTML += `
+        <a href="listings.html?type=${encodeURIComponent(type)}" class="cat-card">
+          <div class="cat-img-wrap">
+            <img src="${fallbackImg}" alt="${type}s" />
+          </div>
+          <div class="cat-info">
+            <h3>${type}s</h3>
+            <p>${subtext}</p>
+          </div>
+        </a>
+      `;
+    }
+    if (footerLinks) {
+      const link = document.createElement('a');
+      link.href = `listings.html?type=${encodeURIComponent(type)}`;
+      link.textContent = `${type}s`;
+      footerLinks.appendChild(link);
+    }
+  });
+});
+
+// Content Loader: Pull Live Stays dynamically from Firebase
+onSnapshot(collection(db, "properties"), (snapshot) => {
+
+    const dynamicStays = [];
+
+    snapshot.forEach(doc => {
+        dynamicStays.push({
+            id: doc.id,
+            ...doc.data()
+        });
+    });
+
+    window.allStaysData = dynamicStays;
+
+
+    /* =========================================
+       DYNAMIC PROPERTY COUNTER
+    ========================================= */
+
+    const propertyCount =
+        document.getElementById("propertyCount");
+
+    if (propertyCount) {
+        propertyCount.textContent = `${snapshot.size}+`;
+    }
+
+
+    /* =========================================
+       EXISTING FEATURED PROPERTY LOADER
+    ========================================= */
+
+    if (typeof renderFeatured === 'function') {
+        renderFeatured();
+    }
+
+});
+</script>
+
+<script>
+// Slider Controls Implementation Frame
+document.addEventListener('DOMContentLoaded', () => {
+  const track = document.getElementById('testimonialTrack');
+  const slides = track ? Array.from(track.children) : [];
+  const prevBtn = document.getElementById('prevSlideBtn');
+  const nextBtn = document.getElementById('nextSlideBtn');
+ 
+  let currentIndex = 0;
+  let autoCycleTimer;
+  function getSlideDimensions() {
+    if (slides.length === 0) return { slideWidth: 0, containerWidth: 0 };
+    const slideWidth = slides[0].getBoundingClientRect().width;
+    const containerWidth = track.parentElement.getBoundingClientRect().width;
+    return { slideWidth, containerWidth };
+  }
+  function updateCarouselPosition() {
+    if (slides.length === 0) return;
+    const { slideWidth, containerWidth } = getSlideDimensions();
+    const centerOffset = (containerWidth - slideWidth) / 2;
+    const totalShiftTranslate = -(currentIndex * slideWidth) + centerOffset;
+   
+    track.style.transform = `translateX(${totalShiftTranslate}px)`;
+    slides.forEach((slide, idx) => {
+      if (idx === currentIndex) slide.classList.add('active-slide');
+      else slide.classList.remove('active-slide');
+    });
+  }
+  function moveNext() {
+    if (slides.length === 0) return;
+    currentIndex = (currentIndex + 1) % slides.length;
+    updateCarouselPosition();
+  }
+  function movePrev() {
+    if (slides.length === 0) return;
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    updateCarouselPosition();
+  }
+  function startAutoCycle() {
+    clearInterval(autoCycleTimer);
+    autoCycleTimer = setInterval(moveNext, 5000);
+  }
+  if (nextBtn) nextBtn.addEventListener('click', () => { moveNext(); startAutoCycle(); });
+  if (prevBtn) prevBtn.addEventListener('click', () => { movePrev(); startAutoCycle(); });
+ 
+  window.addEventListener('resize', updateCarouselPosition);
+  setTimeout(() => {
+    updateCarouselPosition();
+    startAutoCycle();
+  }, 200);
+
+  // ─── PARALLAX DYNAMIC SCROLL CONTROLLER ───────────────────
+  function handleParallaxScroll() {
+    if (window.innerWidth <= 768) return; // Native performance optimization on small devices
+    const parallaxSections = document.querySelectorAll('.parallax-section');
+    parallaxSections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      if (rect.top < viewportHeight && rect.bottom > 0) {
+        const offset = (window.scrollY - section.offsetTop) * 0.12;
+        section.style.backgroundPositionY = `calc(50% + ${offset}px)`;
+        const content = section.querySelector('.parallax-content');
+        if (content) {
+          content.style.transform = `translateY(${offset * -0.25}px)`;
+        }
+      }
+    });
+  }
+  window.addEventListener('scroll', handleParallaxScroll, { passive: true });
+});
+</script>
+
+<!-- PREMIUM DYNAMIC DETAIL OVERLAY MODAL -->
+<div id="propertyModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 9999; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px);">
+  <div class="modal-content" style="background: #ffffff; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; border-radius: 8px; position: relative; animation: modalFadeIn 0.3s ease; border: 1px solid #c5a880;">
+    <button onclick="closePropertyModal()" style="position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 32px; color: #111; cursor: pointer; z-index: 10;">×</button>
+    <div id="modalContainerInner"></div>
+  </div>
+</div>
+
+<style>
+  .testimonial-frame {
+    position: absolute;
+    width: 65%;
+    height: 380px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    transition: transform 850ms ease-in-out, opacity 850ms ease-in-out, z-index 850ms ease-in-out, box-shadow 850ms ease-in-out;
+    will-change: transform, opacity, z-index;
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    box-shadow: none;
+  }
+  .testimonial-frame.position-center {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+    z-index: 5;
+    pointer-events: auto;
+    border: 1px solid rgba(197, 168, 128, 0.4);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 9999px rgba(0,0,0,0.15) inset;
+  }
+  .testimonial-frame.position-left {
+    transform: translateX(-55%) scale(0.92);
+    opacity: 0.75;
+    z-index: 3;
+    filter: blur(1px);
+  }
+  .testimonial-frame.position-right {
+    transform: translateX(55%) scale(0.92);
+    opacity: 0.75;
+    z-index: 3;
+    filter: blur(1px);
+  }
+  @media(max-width: 768px) {
+    .testimonial-frame {
+      width: 80%;
+    }
+    .testimonial-frame.position-left {
+      transform: translateX(-50%) scale(0.9);
+    }
+    .testimonial-frame.position-right {
+      transform: translateX(50%) scale(0.9);
+    }
+  }
+  @keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .modal-amenity-item {
+    background: #faf7f2;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif;
+    border: 1px solid #e8dec9;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+</style>
+</body>
+</html>
