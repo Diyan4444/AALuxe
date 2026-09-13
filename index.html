@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AALUXE — Luxury Stays, Unbeatable Prices</title>
+  <title>AALUXE — Luxury Stays & Exclusive Retreats</title>
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
   <link rel="stylesheet" href="style.css" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -351,7 +354,7 @@
   </div>
   <div class="hero-content">
     <p class="hero-eyebrow contrast-text">Welcome to AALUXE</p>
-    <h1 class="hero-headline contrast-text">Luxury stays at<br/><em style="color: #ffffff;" class="contrast-text">unbeatable prices</em></h1>
+    <h1 class="hero-headline contrast-text">Luxury stays &<br/><em style="color: #ffffff;" class="contrast-text">exclusive retreats</em></h1>
     <p class="hero-sub contrast-text">Handpicked resorts, villas & exclusive retreats — through personal connections, for you.</p>
     <div class="search-box" style="display: flex; align-items: center; background: #ffffff; padding: 8px; border-radius: 6px; max-width: 550px; margin: 0 auto; box-shadow: 0 15px 35px rgba(0,0,0,0.25); border: 1px solid rgba(197, 168, 128, 0.4);">
       <div class="search-field" style="flex: 1; padding: 6px 15px; display: flex; flex-direction: column; justify-content: center; text-align: left;">
@@ -407,10 +410,10 @@
    
     <div class="testimonial-frame" style="background-image: url('1.jpeg');"></div>
     <div class="testimonial-frame" style="background-image: url('2.jpeg');"></div>
+    <div class="testimonial-frame" style="background-image: url('3.png');"></div>
     <div class="testimonial-frame" style="background-image: url('4.jpeg');"></div>
-    <div class="testimonial-frame" style="background-image: url('5.png');"></div>
-    <div class="testimonial-frame" style="background-image: url('6.jpeg');"></div>
     <div class="testimonial-frame" style="background-image: url('5.jpeg');"></div>
+    <div class="testimonial-frame" style="background-image: url('6.jpeg');"></div>
   </div>
 </section>
 
@@ -495,7 +498,7 @@
     <div class="why-grid">
       <div class="why-card"><div class="why-icon">✦</div><h4>Personal Connections</h4><p>Direct relationships with resort owners means rates no app can match.</p></div>
       <div class="why-card"><div class="why-icon">◈</div><h4>Curated Selection</h4><p>Every property is personally vetted. No algorithm, only taste.</p></div>
-      <div class="why-card"><div class="why-icon">◉</div><h4>Unbeatable Prices</h4><p>Save 20–40% compared to standard booking platforms.</p></div>
+      <div class="why-card"><div class="why-icon">◉</div><h4>Bespoke Hospitality</h4><p>Personally curated luxury stays tailored for your journey.</p></div>
       <div class="why-card"><div class="why-icon">◇</div><h4>Dedicated Support</h4><p>Reach us on WhatsApp anytime — before, during, or after your stay.</p></div>
     </div>
   </div>
@@ -506,11 +509,11 @@
     <div class="contact-text">
       <div class="section-label">Get in touch</div>
       <h2 class="section-title">Ready to book your perfect stay?</h2>
-      <p>Talk to us directly on WhatsApp — we'll find you the best deal, fast.</p>
+      <p>Talk to us directly on WhatsApp — we'll help plan your trip, fast.</p>
     </div>
     <div class="contact-actions">
-      <a href="https://wa.me/9819893157?text=Hi%20AALUXE!%20I%27d%20like%20to%20book%20a%20stay." target="_blank" class="btn-whatsapp">Chat on WhatsApp</a>
-      <a href="tel:9819893157" class="btn-phone">Call Us</a>
+      <a href="https://wa.me/919819893157?text=Hi%20AALUXE!%20I%27d%20like%20to%20book%20a%20stay." target="_blank" class="btn-whatsapp">Chat on WhatsApp</a>
+      <a href="tel:+919819893157" class="btn-phone">Call Us</a>
     </div>
   </div>
 </section>
@@ -519,7 +522,7 @@
   <div class="container footer-inner">
     <div class="footer-brand">
       <a href="index.html" class="logo logo--light"><span class="logo-a">A</span>ALUXE</a>
-      <p>Luxury stays at unbeatable prices, through personal connections.</p>
+      <p>Luxury stays & exclusive retreats through personal connections.</p>
     </div>
     <div class="footer-links" id="footerDynamicLinks">
       <h5>Explore</h5>
@@ -532,8 +535,8 @@
     </div>
     <div class="footer-links">
       <h5>Contact</h5>
-      <a href="https://wa.me/9819893157" target="_blank">WhatsApp</a>
-      <a href="tel:+9819893157">+91 98198 93157</a>
+      <a href="https://wa.me/919819893157" target="_blank">WhatsApp</a>
+      <a href="tel:+919819893157">+91 98198 93157</a>
     </div>
   </div>
   <div class="footer-bottom">
@@ -541,184 +544,144 @@
   </div>
 </footer>
 
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js";
+  import { subscribeToAuth } from './src/firebase/auth.js';
+  import { subscribeToProperties, subscribeToLocations, subscribeToTypes } from './src/firebase/firestore.js';
+  import { escapeHTML } from './src/utils/security.js';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDmHDMcsngn63fqO9ya-w60WoWl5m8Rl7k",
-  authDomain: "aaluxe-1627d.firebaseapp.com",
-  projectId: "aaluxe-1627d",
-  storageBucket: "aaluxe-1627d.firebasestorage.app",
-  messagingSenderId: "1005965760649",
-  appId: "1:1005965760649:web:2c9817725f393988e30e58",
-  measurementId: "G-MVBZQXC58M"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const storage = getStorage(app);
-
-const activeUser = JSON.parse(localStorage.getItem('aaluxe_user'));
-const ADMIN_LIST = ['aaluxe0509@gmail.com', 'dailykarma1910@gmail.com'];
-if (activeUser && ADMIN_LIST.includes(activeUser.email)) {
-  const consoleButton = document.getElementById('adminConsoleLink');
-  if (consoleButton) consoleButton.style.display = 'block';
-}
-if (typeof updateBadges === 'function') updateBadges();
-
-// Live Taxonomy: Load Hero Search Dropdown Menu Options
-onSnapshot(collection(db, "locations"), (snapshot) => {
-  const heroSelect = document.getElementById('heroLocationSelect');
-  if (!heroSelect) return;
-  heroSelect.innerHTML = '<option value="">Select Destination...</option>';
-  snapshot.forEach(doc => {
-    const name = doc.data().name;
-    const opt = document.createElement('option');
-    opt.value = name;
-    opt.textContent = name;
-    heroSelect.appendChild(opt);
+  // Auth state listener for UI role buttons
+  subscribeToAuth((user) => {
+    const adminLink = document.getElementById('adminConsoleLink');
+    if (adminLink) adminLink.style.display = (user && user.role === 'admin') ? 'block' : 'none';
   });
-});
 
-// Live Taxonomy: Build Category Cards & Footer Elements Dynamically
-onSnapshot(collection(db, "types"), (snapshot) => {
-  const grid = document.getElementById('dynamicCategoryGrid');
-  const footerLinks = document.getElementById('footerDynamicLinks');
- 
-  if (grid) grid.innerHTML = '';
-  if (footerLinks) {
-    footerLinks.innerHTML = '<h5>Explore</h5><a href="listings.html">All Stays</a>';
-  }
-  const imageFallbacks = [
-    "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=80",
-    "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80",
-    "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&q=80"
-  ];
-  const subtextMap = {
-    'Resort': 'All-inclusive premium getaways',
-    'Villa': 'Private spaces & exclusive groups',
-    'Boutique': 'Intimate, styled, & personalized',
-    'Heritage': 'Classic architecture & rich history'
-  };
-  let checkIdx = 0;
-  snapshot.forEach(doc => {
-    const type = doc.data().name;
-    const fallbackImg = imageFallbacks[checkIdx % imageFallbacks.length];
-    checkIdx++;
-    const subtext = subtextMap[type] || `Handpicked premium ${type.toLowerCase()} stays`;
-    if (grid) {
-      grid.innerHTML += `
-        <a href="listings.html?type=${encodeURIComponent(type)}" class="cat-card">
-          <div class="cat-img-wrap">
-            <img src="${fallbackImg}" alt="${type}s" />
-          </div>
-          <div class="cat-info">
-            <h3>${type}s</h3>
-            <p>${subtext}</p>
-          </div>
-        </a>
-      `;
-    }
-    if (footerLinks) {
-      const link = document.createElement('a');
-      link.href = `listings.html?type=${encodeURIComponent(type)}`;
-      link.textContent = `${type}s`;
-      footerLinks.appendChild(link);
-    }
-  });
-});
+  if (typeof updateBadges === 'function') updateBadges();
 
-// Content Loader: Pull Live Stays dynamically from Firebase
-onSnapshot(collection(db, "properties"), (snapshot) => {
-
-    const dynamicStays = [];
-
-    snapshot.forEach(doc => {
-        dynamicStays.push({
-            id: doc.id,
-            ...doc.data()
-        });
+  // Live Taxonomy: Load Hero Search Dropdown
+  subscribeToLocations((locations) => {
+    const heroSelect = document.getElementById('heroLocationSelect');
+    if (!heroSelect) return;
+    heroSelect.innerHTML = '<option value="">Select Destination...</option>';
+    locations.forEach(loc => {
+      const name = escapeHTML(loc.name);
+      const opt = document.createElement('option');
+      opt.value = loc.name;
+      opt.textContent = name;
+      heroSelect.appendChild(opt);
     });
+  });
 
-    window.allStaysData = dynamicStays;
-
-
-    /* =========================================
-       DYNAMIC PROPERTY COUNTER
-    ========================================= */
-
-    const propertyCount =
-        document.getElementById("propertyCount");
-
-    if (propertyCount) {
-        propertyCount.textContent = `${snapshot.size}+`;
+  // Live Taxonomy: Category Cards & Footer Links (Resorts, Heritages, Boutiques, Villas)
+  subscribeToTypes((types) => {
+    const grid = document.getElementById('dynamicCategoryGrid');
+    const footerLinks = document.getElementById('footerDynamicLinks');
+   
+    if (grid) grid.innerHTML = '';
+    if (footerLinks) {
+      footerLinks.innerHTML = '<h5>Explore</h5><a href="listings.html">All Stays</a>';
     }
 
+    const typeConfigs = [
+      { key: 'Villa', title: 'Villas', subtitle: 'Private luxury villa estates', img: 'bg.avif' },
+      { key: 'Resort', title: 'Resorts', subtitle: 'Handpicked luxury resort retreats', img: 'bg_img_1.avif' }
+    ];
 
-    /* =========================================
-       EXISTING FEATURED PROPERTY LOADER
-    ========================================= */
+    typeConfigs.forEach(cfg => {
+      const typeKey = cfg.key;
+      const title = escapeHTML(cfg.title);
+      const subtitle = escapeHTML(cfg.subtitle);
+      const img = cfg.img;
+
+      if (grid) {
+        grid.innerHTML += `
+          <a href="listings.html?type=${encodeURIComponent(typeKey)}" class="cat-card">
+            <div class="cat-img-wrap">
+              <img src="${img}" alt="${title}" />
+            </div>
+            <div class="cat-info">
+              <h3>${title}</h3>
+              <p>${subtitle}</p>
+            </div>
+          </a>
+        `;
+      }
+      if (footerLinks) {
+        const link = document.createElement('a');
+        link.href = `listings.html?type=${encodeURIComponent(typeKey)}`;
+        link.textContent = title;
+        footerLinks.appendChild(link);
+      }
+    });
+  });
+
+  // Live Stays
+  subscribeToProperties((properties) => {
+    const publishedProps = properties.filter(p => p.published !== false);
+    window.allStaysData = publishedProps;
+
+    const propertyCount = document.getElementById("propertyCount");
+    if (propertyCount) {
+      propertyCount.textContent = `${publishedProps.length}+`;
+    }
 
     if (typeof renderFeatured === 'function') {
-        renderFeatured();
+      renderFeatured();
     }
-
-});
+  });
 </script>
 
 <script>
-// Slider Controls Implementation Frame
+// 3D Photo Slideshow Controller (1.jpeg, 2.jpeg, 3.png, 4.jpeg, 5.jpeg, 6.jpeg)
 document.addEventListener('DOMContentLoaded', () => {
-  const track = document.getElementById('testimonialTrack');
-  const slides = track ? Array.from(track.children) : [];
+  const stage = document.getElementById('testimonialStage');
+  const frames = stage ? Array.from(stage.querySelectorAll('.testimonial-frame')) : [];
   const prevBtn = document.getElementById('prevSlideBtn');
   const nextBtn = document.getElementById('nextSlideBtn');
- 
+
   let currentIndex = 0;
   let autoCycleTimer;
-  function getSlideDimensions() {
-    if (slides.length === 0) return { slideWidth: 0, containerWidth: 0 };
-    const slideWidth = slides[0].getBoundingClientRect().width;
-    const containerWidth = track.parentElement.getBoundingClientRect().width;
-    return { slideWidth, containerWidth };
-  }
+
   function updateCarouselPosition() {
-    if (slides.length === 0) return;
-    const { slideWidth, containerWidth } = getSlideDimensions();
-    const centerOffset = (containerWidth - slideWidth) / 2;
-    const totalShiftTranslate = -(currentIndex * slideWidth) + centerOffset;
-   
-    track.style.transform = `translateX(${totalShiftTranslate}px)`;
-    slides.forEach((slide, idx) => {
-      if (idx === currentIndex) slide.classList.add('active-slide');
-      else slide.classList.remove('active-slide');
+    if (frames.length === 0) return;
+    const total = frames.length;
+    frames.forEach((frame, idx) => {
+      frame.className = 'testimonial-frame';
+      const prevIndex = (currentIndex - 1 + total) % total;
+      const nextIndex = (currentIndex + 1) % total;
+
+      if (idx === currentIndex) {
+        frame.classList.add('position-center');
+      } else if (idx === prevIndex) {
+        frame.classList.add('position-left');
+      } else if (idx === nextIndex) {
+        frame.classList.add('position-right');
+      }
     });
   }
+
   function moveNext() {
-    if (slides.length === 0) return;
-    currentIndex = (currentIndex + 1) % slides.length;
+    if (frames.length === 0) return;
+    currentIndex = (currentIndex + 1) % frames.length;
     updateCarouselPosition();
   }
+
   function movePrev() {
-    if (slides.length === 0) return;
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    if (frames.length === 0) return;
+    currentIndex = (currentIndex - 1 + frames.length) % frames.length;
     updateCarouselPosition();
   }
+
   function startAutoCycle() {
     clearInterval(autoCycleTimer);
-    autoCycleTimer = setInterval(moveNext, 5000);
+    autoCycleTimer = setInterval(moveNext, 4000);
   }
+
   if (nextBtn) nextBtn.addEventListener('click', () => { moveNext(); startAutoCycle(); });
   if (prevBtn) prevBtn.addEventListener('click', () => { movePrev(); startAutoCycle(); });
- 
-  window.addEventListener('resize', updateCarouselPosition);
-  setTimeout(() => {
-    updateCarouselPosition();
-    startAutoCycle();
-  }, 200);
+
+  updateCarouselPosition();
+  startAutoCycle();
 
   // ─── PARALLAX DYNAMIC SCROLL CONTROLLER ───────────────────
   function handleParallaxScroll() {
@@ -742,9 +705,9 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <!-- PREMIUM DYNAMIC DETAIL OVERLAY MODAL -->
-<div id="propertyModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 9999; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px);">
-  <div class="modal-content" style="background: #ffffff; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; border-radius: 8px; position: relative; animation: modalFadeIn 0.3s ease; border: 1px solid #c5a880;">
-    <button onclick="closePropertyModal()" style="position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 32px; color: #111; cursor: pointer; z-index: 10;">×</button>
+<div id="propertyModal" class="modal-overlay">
+  <div class="modal-content luxury-card-modal">
+    <button type="button" class="modal-close-btn" onclick="closePropertyModal()" aria-label="Close Modal">&times;</button>
     <div id="modalContainerInner"></div>
   </div>
 </div>

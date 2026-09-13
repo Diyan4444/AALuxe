@@ -4,7 +4,10 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Saved Stays — AALUXE</title>
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
   <link rel="stylesheet" href="style.css"/>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
@@ -57,9 +60,9 @@
 </section>
 
 <!-- PREMIUM DYNAMIC DETAIL OVERLAY MODAL -->
-<div id="propertyModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 9999; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px);">
-  <div class="modal-content" style="background: #ffffff; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; border-radius: 8px; position: relative; border: 1px solid #c5a880;">
-    <button onclick="closePropertyModal()" style="position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 32px; color: #111; cursor: pointer; z-index: 10;">&times;</button>
+<div id="propertyModal" class="modal-overlay">
+  <div class="modal-content luxury-card-modal">
+    <button type="button" class="modal-close-btn" onclick="closePropertyModal()" aria-label="Close Modal">&times;</button>
     <div id="modalContainerInner"></div>
   </div>
 </div>
@@ -68,67 +71,36 @@
   <div class="container footer-inner">
     <div class="footer-brand">
       <a href="index.html" class="logo logo--light"><span class="logo-a">A</span>ALUXE</a>
-      <p>Luxury stays at unbeatable prices.</p>
+      <p>Luxury stays & exclusive retreats.</p>
     </div>
     <div class="footer-links">
       <h5>Contact</h5>
-      <a href="https://wa.me/9819893157" target="_blank">WhatsApp</a>
-      <a href="tel:+9819893157">+91 98198 93157</a>
+      <a href="https://wa.me/919819893157" target="_blank">WhatsApp</a>
+      <a href="tel:+919819893157">+91 98198 93157</a>
     </div>
   </div>
   <div class="footer-bottom"><p>© 2026 AALUXE. All rights reserved.</p></div>
 </footer>
 
 <!-- 1. Load your local global methods first -->
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
 
 <!-- 2. Execute Firebase fetching to seamlessly coordinate saved array references -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-  import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+  import { subscribeToAuth } from './src/firebase/auth.js';
+  import { subscribeToProperties } from './src/firebase/firestore.js';
 
-  // Your verified Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyDmHDMcsngn63fqO9ya-w60WoWl5m8Rl7k",
-    authDomain: "aaluxe-1627d.firebaseapp.com",
-    projectId: "aaluxe-1627d",
-    storageBucket: "aaluxe-1627d.firebasestorage.app",
-    messagingSenderId: "1005965760649",
-    appId: "1:1005965760649:web:2c9817725f393988e30e58",
-    measurementId: "G-MVBZQXC58M"
-  };
+  subscribeToAuth((user) => {
+    const adminLink = document.getElementById('adminConsoleLink');
+    if (adminLink) adminLink.style.display = (user && user.role === 'admin') ? 'block' : 'none';
+  });
 
-  // Initialize Firebase & Firestore
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // Check local storage for the logged-in user session to display console link dynamically
-  const activeUser = JSON.parse(localStorage.getItem('aaluxe_user'));
-  const ADMIN_LIST = ['aaluxe0509@gmail.com', 'dailykarma1910@gmail.com'];
-
-  if (activeUser && ADMIN_LIST.includes(activeUser.email)) {
-    const consoleButton = document.getElementById('adminConsoleLink');
-    if (consoleButton) {
-      consoleButton.style.display = 'block';
-    }
-  }
-
-  // Update navbar numbers immediately on load
   if (typeof updateBadges === 'function') {
     updateBadges();
   }
 
-  // Real-time Cloud Content Stream Listener
-  onSnapshot(collection(db, "properties"), (snapshot) => {
-    const dynamicStays = [];
-    snapshot.forEach(doc => {
-      dynamicStays.push({ id: doc.id, ...doc.data() });
-    });
-    
-    // Pass real-time data to global scope
-    window.allStaysData = dynamicStays;
-
-    // Render the user's favorites safely now that the stream has loaded
+  subscribeToProperties((properties) => {
+    window.allStaysData = properties.filter(p => p.published !== false);
     if (typeof initFavorites === 'function') {
       initFavorites();
     }

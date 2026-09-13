@@ -4,7 +4,10 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>All Stays — AALUXE</title>
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
   <link rel="stylesheet" href="style.css"/>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   
@@ -150,7 +153,7 @@
   <div class="container header-content">
     <p class="page-eyebrow">AALUXE Collection</p>
     <h1>All Stays</h1>
-    <p class="page-sub">Handpicked properties at prices you won't find anywhere else.</p>
+    <p class="page-sub">Handpicked luxury properties & exclusive retreats.</p>
   </div>
 </div>
 
@@ -208,32 +211,17 @@
   </main>
 </div>
 
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-  import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+  import { subscribeToAuth } from './src/firebase/auth.js';
+  import { subscribeToProperties, subscribeToLocations, subscribeToTypes } from './src/firebase/firestore.js';
+  import { escapeHTML } from './src/utils/security.js';
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDmHDMcsngn63fqO9ya-w60WoWl5m8Rl7k",
-    authDomain: "aaluxe-1627d.firebaseapp.com",
-    projectId: "aaluxe-1627d",
-    storageBucket: "aaluxe-1627d.firebasestorage.app",
-    messagingSenderId: "1005965760649",
-    appId: "1:1005965760649:web:2c9817725f393988e30e58",
-    measurementId: "G-MVBZQXC58M"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  const activeUser = JSON.parse(localStorage.getItem('aaluxe_user'));
-  const ADMIN_LIST = ['aaluxe0509@gmail.com', 'dailykarma1910@gmail.com'];
-
-  if (activeUser && ADMIN_LIST.includes(activeUser.email)) {
-    const consoleButton = document.getElementById('adminConsoleLink');
-    if (consoleButton) consoleButton.style.display = 'block';
-  }
+  subscribeToAuth((user) => {
+    const adminLink = document.getElementById('adminConsoleLink');
+    if (adminLink) adminLink.style.display = (user && user.role === 'admin') ? 'block' : 'none';
+  });
 
   if (typeof updateBadges === 'function') updateBadges();
 
@@ -248,69 +236,64 @@
     if (searchBar) searchBar.value = "";
     
     if (typeof applyFilters === 'function') applyFilters();
-  }
+  };
 
-  // Dynamic Live Taxonomy: Locations Mapping
-  onSnapshot(collection(db, "locations"), (snapshot) => {
+  // Locations Mapping
+  subscribeToLocations((locations) => {
     const locFilter = document.getElementById('locationFilter');
     if (!locFilter) return;
     const currentVal = locFilter.value;
     locFilter.innerHTML = '<option value="">All Locations</option>';
-    snapshot.forEach(doc => {
-      const loc = doc.data().name;
+    locations.forEach(doc => {
+      const loc = escapeHTML(doc.name);
       const option = document.createElement('option');
-      option.value = loc;
+      option.value = doc.name;
       option.textContent = loc;
       locFilter.appendChild(option);
     });
     locFilter.value = currentVal;
   });
 
-  // Dynamic Live Taxonomy: Stay Type Mapping
-  onSnapshot(collection(db, "types"), (snapshot) => {
+  // Stay Type Mapping (Filtered strictly to Resort and Villa)
+  subscribeToTypes((types) => {
     const container = document.getElementById('dynamicTypeChecks');
     if (!container) return;
     container.innerHTML = '';
-    snapshot.forEach(doc => {
-      const type = doc.data().name;
-      container.innerHTML += `<label><input type="checkbox" class="type-check" value="${type}" onchange="applyFilters()"> ${type}s</label>`;
+    
+    const allowedTypes = ['Resort', 'Villa'];
+    const filteredTypes = (types || []).filter(t => 
+      allowedTypes.some(a => a.toLowerCase() === (t.name || '').trim().toLowerCase())
+    );
+
+    const renderList = filteredTypes.length > 0 ? filteredTypes.map(t => t.name) : allowedTypes;
+
+    renderList.forEach(typeName => {
+      const safeType = escapeHTML(typeName);
+      const labelText = safeType.toLowerCase().endsWith('s') ? safeType : `${safeType}s`;
+      container.innerHTML += `<label><input type="checkbox" class="type-check" value="${safeType}" onchange="applyFilters()"> ${labelText}</label>`;
     });
   });
 
   // Master Sync Execution Stream
-  // =========================================================
-  // LIVE PROPERTY LIST + PROPERTY COUNTER
-  // =========================================================
-  onSnapshot(collection(db, "properties"), (snapshot) => {
-    const dynamicStays = [];
-    snapshot.forEach(doc => {
-      dynamicStays.push({
-        id: doc.id,
-        ...doc.data()
-      });
-    });
+  subscribeToProperties((properties) => {
+    const publishedProps = properties.filter(p => p.published !== false);
+    window.allStaysData = publishedProps;
 
-    // Store all properties globally
-    window.allStaysData = dynamicStays;
-
-    // TOTAL PROPERTY COUNTER
-    const totalProperties = snapshot.size;
+    const totalProperties = publishedProps.length;
     if (typeof animatePropertyCount === 'function') {
       animatePropertyCount(totalProperties);
     }
 
-    // READ URL FILTERS
+    // Read URL Filters
     const urlParams = new URLSearchParams(window.location.search);
     const searchQuery = urlParams.get("search") ? urlParams.get("search").trim() : "";
     const typeParam = urlParams.get("type") ? urlParams.get("type").trim() : "";
 
-    // APPLY URL FILTERS
     if (searchQuery || typeParam) {
       setTimeout(() => {
         if (searchQuery) {
           const searchBar = document.getElementById("keywordSearch");
           const locFilter = document.getElementById("locationFilter");
-
           const options = locFilter ? Array.from(locFilter.options) : [];
           const matchedOption = options.find(
             opt => opt.value.toLowerCase() === searchQuery.toLowerCase()
@@ -364,10 +347,10 @@
 </script>
 
 <!-- PREMIUM DYNAMIC DETAIL OVERLAY MODAL -->
-<div id="propertyModal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 9999; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px);">
-  <div class="modal-content" style="background: #ffffff; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; border-radius: 8px; position: relative; animation: modalFadeIn 0.3s ease; border: 1px solid #c5a880;">
-      <button onclick="closePropertyModal()" style="position: absolute; top: 15px; right: 20px; background: rgba(255, 255, 255, 0.85); border: none; font-size: 28px; line-height: 26px; color: #111; cursor: pointer; z-index: 99999; width: 32px; height: 32px; border-radius: 50%; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: background 0.2s; padding: 0;">&times;</button>
-      <div id="modalContainerInner"></div>
+<div id="propertyModal" class="modal-overlay">
+  <div class="modal-content luxury-card-modal">
+    <button type="button" class="modal-close-btn" onclick="closePropertyModal()" aria-label="Close Modal">&times;</button>
+    <div id="modalContainerInner"></div>
   </div>
 </div>
 

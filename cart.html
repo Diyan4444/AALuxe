@@ -4,7 +4,10 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Cart — AALUXE</title>
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
   <link rel="stylesheet" href="style.css"/>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
@@ -61,21 +64,28 @@
   <div class="container footer-inner">
     <div class="footer-brand">
       <a href="index.html" class="logo logo--light"><span class="logo-a">A</span>ALUXE</a>
-      <p>Luxury stays at unbeatable prices.</p>
+      <p>Luxury stays & exclusive retreats.</p>
     </div>
     <div class="footer-links">
       <h5>Contact</h5>
-      <a href="https://wa.me/9819893157" target="_blank">WhatsApp</a>
-      <a href="tel:+9819893157">+91 98198 93157</a>
+      <a href="https://wa.me/919819893157" target="_blank">WhatsApp</a>
+      <a href="tel:+919819893157">+91 98198 93157</a>
     </div>
   </div>
   <div class="footer-bottom"><p>© 2026 AALUXE. All rights reserved.</p></div>
 </footer>
 
-<script src="script.js"></script>
-<script>
-  initCart();
-  updateBadges();
+<script type="module" src="script.js"></script>
+<script type="module">
+  import { subscribeToAuth } from './src/firebase/auth.js';
+
+  subscribeToAuth((user) => {
+    const adminLink = document.getElementById('adminConsoleLink');
+    if (adminLink) adminLink.style.display = (user && user.role === 'admin') ? 'block' : 'none';
+  });
+
+  if (typeof initCart === 'function') initCart();
+  if (typeof updateBadges === 'function') updateBadges();
 </script>
 </body>
 </html>

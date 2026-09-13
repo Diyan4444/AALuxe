@@ -1,0 +1,64 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─── AUTHENTICATION & ROLE HELPERS ──────────────────────────────────────
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Authoritative Admin check strictly locked to authorized administrator emails
+    function isAdmin() {
+      return isAuthenticated() &&
+        request.auth.token.email != null &&
+        (request.auth.token.email.lower() in ['aaluxe0509@gmail.com', 'dailykarma1910@gmail.com']);
+    }
+
+    // ─── PUBLIC CATALOG: PROPERTIES, LOCATIONS, STAY TYPES ─────────────────
+    match /properties/{propertyId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /locations/{locationId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /types/{typeId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ─── USER PROFILES — PRIVACY & ROLE ESCALATION PROTECTION ──────────────
+    match /users/{userId} {
+      // Profile Privacy: Users can only read their own profile; admins can read all
+      allow read: if isOwner(userId) || isAdmin();
+      
+      // Creation: Owner can create default customer profile; admin can create any profile
+      allow create: if (isOwner(userId) && (!('role' in request.resource.data) || request.resource.data.role == 'customer')) || isAdmin();
+      
+      // Update: Owner can update profile details (displayName, photoURL), but CANNOT modify role, uid, or admin flags
+      allow update: if isAdmin() || (
+        isOwner(userId) &&
+        (!('role' in request.resource.data) || request.resource.data.role == resource.data.role) &&
+        (!('uid' in request.resource.data) || request.resource.data.uid == resource.data.uid) &&
+        (!('admin' in request.resource.data) || request.resource.data.admin == resource.data.admin)
+      );
+      
+      allow delete: if isAdmin();
+    }
+
+    // ─── USER SEARCH & ACTIVITY AUDIT LOGS (ADMIN READ ONLY) ────────────────
+    match /searchLogs/{logId} {
+      allow create: if true;
+      allow read, delete: if isAdmin();
+    }
+  }
+}
+
+

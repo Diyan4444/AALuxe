@@ -1,0 +1,30 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.admin == true ||
+        (request.auth.token.email != null && request.auth.token.email in ['aaluxe0509@gmail.com', 'dailykarma1910@gmail.com'])
+      );
+    }
+
+    // Public read access for all published images
+    match /{allPaths=**} {
+      allow read: if true;
+    }
+
+    // Property images: Upload & Delete allowed ONLY for authenticated admins
+    match /properties/{imageId} {
+      allow write: if isAdmin()
+                   && request.resource.size < 5 * 1024 * 1024
+                   && request.resource.contentType.matches('image/(jpeg|jpg|png|webp|avif).*');
+      allow delete: if isAdmin();
+    }
+  }
+}
+

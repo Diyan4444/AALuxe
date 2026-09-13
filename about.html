@@ -8,12 +8,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   
-  <script>
-    // Security Guard: Check authentication before loading content layouts
-    if (!localStorage.getItem('aaluxe_user')) {
-      window.location.href = "login.html";
-    }
-  </script>
 </head>
 <body>
 
@@ -136,20 +130,26 @@
   <div class="container footer-inner">
     <div class="footer-brand">
       <a href="index.html" class="logo logo--light"><span class="logo-a">A</span>ALUXE</a>
-      <p>Luxury stays at unbeatable prices.</p>
+      <p>Luxury stays & exclusive retreats.</p>
     </div>
     <div class="footer-links">
       <h5>Contact</h5>
-      <a href="https://wa.me/9819893157" target="_blank">WhatsApp</a>
-      <a href="tel:+9819893157">+91 98198 93157</a>
+      <a href="https://wa.me/919819893157" target="_blank">WhatsApp</a>
+      <a href="tel:+919819893157">+91 98198 93157</a>
     </div>
   </div>
   <div class="footer-bottom"><p>© 2026 AALUXE. All rights reserved.</p></div>
 </footer>
 
-<script src="script.js"></script>
-<script>
-  // Ensure the badge counts accurately match local array lengths on page boot
+<script type="module" src="script.js"></script>
+<script type="module">
+  import { subscribeToAuth } from './src/firebase/auth.js';
+
+  subscribeToAuth((user) => {
+    const adminLink = document.getElementById('adminConsoleLink');
+    if (adminLink) adminLink.style.display = (user && user.role === 'admin') ? 'block' : 'none';
+  });
+
   if (typeof updateBadges === 'function') {
     updateBadges();
   }
