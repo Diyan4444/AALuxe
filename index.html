@@ -170,49 +170,175 @@
     .carousel-arrow.left-arrow { left: 5%; }
     .carousel-arrow.right-arrow { right: 5%; }
 
-    /* Premium Trusted Messages Styling Layout */
+    /* Dynamic Luxury Review Slider Styling */
     .trusted-messages-section {
-      padding: 80px 0;
+      padding: 85px 0;
       background: #ffffff;
+      position: relative;
+      overflow: hidden;
     }
-    .messages-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      margin-top: 40px;
+    .review-slider-wrapper {
+      position: relative;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 10px 45px 30px;
     }
-    .message-card {
+    .review-slider-track-container {
+      overflow: hidden;
+      width: 100%;
+      border-radius: 12px;
+    }
+    .review-slider-track {
+      display: flex;
+      transition: transform 600ms cubic-bezier(0.25, 1, 0.5, 1);
+      will-change: transform;
+      gap: 24px;
+    }
+    .review-slide-card {
+      flex: 0 0 calc(50% - 12px);
+      min-width: calc(50% - 12px);
       background: #faf7f2;
-      border: 1px solid #f0eadd;
-      padding: 35px;
-      border-radius: 6px;
+      border: 1px solid #e8dec9;
+      border-radius: 12px;
+      padding: 32px;
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       text-align: left;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.03);
+      position: relative;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
     }
-    .message-text {
-      font-family: 'Montserrat', sans-serif;
+    .review-slide-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(197, 168, 128, 0.18);
+      border-color: #c5a880;
+    }
+    .review-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .review-stars {
+      color: #c5a880;
       font-size: 14px;
-      line-height: 1.7;
-      color: #444;
-      white-space: pre-line;
-      margin-bottom: 20px;
+      letter-spacing: 2px;
     }
-    .message-author {
+    .review-verified-tag {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #2b7a4b;
+      background: #eaf6ee;
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid #c2e8ce;
+    }
+    .review-quote-mark {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 64px;
+      line-height: 1;
+      color: rgba(197, 168, 128, 0.2);
+      pointer-events: none;
+      font-style: italic;
+    }
+    .review-body-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #38342e;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 2;
+    }
+    .review-author-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid rgba(197, 168, 128, 0.25);
+      padding-top: 16px;
+      margin-top: auto;
+    }
+    .author-avatar-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #111111, #2c2720);
+      color: #c5a880;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #c5a880;
+      flex-shrink: 0;
+    }
+    .author-name {
       font-family: 'Cormorant Garamond', serif;
       font-size: 18px;
       font-weight: 600;
-      color: #c5a880;
+      color: #111111;
+    }
+    .author-location {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      color: #888888;
       letter-spacing: 0.5px;
+    }
+    .review-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      background: #ffffff;
+      border: 1px solid #c5a880;
+      color: #111111;
+      border-radius: 50%;
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      font-size: 20px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
     }
-    .message-author::before {
-      content: "—";
-      color: #c5a880;
+    .review-arrow:hover {
+      background: #c5a880;
+      color: #ffffff;
+      box-shadow: 0 6px 18px rgba(197, 168, 128, 0.4);
+    }
+    .review-left-arrow { left: 0px; }
+    .review-right-arrow { right: 0px; }
+    .review-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 24px;
+    }
+    .review-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #e0d6c3;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .review-dot.active {
+      background: #c5a880;
+      width: 28px;
+      border-radius: 10px;
     }
     @media(max-width: 768px) {
       .carousel-slide {
@@ -222,10 +348,16 @@
       .carousel-card-inner img { height: 260px; }
       .carousel-arrow.left-arrow { left: 1%; }
       .carousel-arrow.right-arrow { right: 1%; }
-      .messages-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+      .review-slider-wrapper {
+        padding: 10px 5px 30px;
       }
+      .review-slide-card {
+        flex: 0 0 100%;
+        min-width: 100%;
+        padding: 24px;
+      }
+      .review-left-arrow { left: -5px; }
+      .review-right-arrow { right: -5px; }
     }
 
     /* ─── PARALLAX STYLES ──────────────────────────────────── */
@@ -321,7 +453,8 @@
 <nav class="navbar" id="navbar">
   <div class="nav-inner">
     <a href="index.html" class="logo contrast-logo">
-      <span class="logo-a" style="color: #c5a880;">A</span>ALUXE
+      <img src="logo.png" alt="AALUXE Logo" class="nav-logo-img" />
+      <span><span class="logo-a" style="color: #c5a880;">A</span>ALUXE</span>
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html" class="nav-link contrast-text">Home</a></li>
@@ -414,6 +547,8 @@
     <div class="testimonial-frame" style="background-image: url('4.jpeg');"></div>
     <div class="testimonial-frame" style="background-image: url('5.jpeg');"></div>
     <div class="testimonial-frame" style="background-image: url('6.jpeg');"></div>
+    <div class="testimonial-frame" style="background-image: url('New Image 1.jpeg');"></div>
+    <div class="testimonial-frame" style="background-image: url('New Image 2.jpeg');"></div>
   </div>
 </section>
 
@@ -458,48 +593,157 @@
 
 <section class="trusted-messages-section">
   <div class="container" style="text-align: center;">
-    <div class="section-label">Client Notes</div>
-    <h2 class="section-title" style="font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 400; margin-bottom: 10px;">Trusted by Our Customers</h2>
+    <div class="section-label">Client Notes & Experiences</div>
+    <h2 class="section-title" style="font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 400; margin-bottom: 12px;">Trusted by Our Guests</h2>
+    <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: #666; max-width: 620px; margin: 0 auto 35px; line-height: 1.6;">Real stories from travellers who experienced luxury, seamless bookings, and unbeatable direct tariffs with AALUXE.</p>
    
-    <div class="messages-grid">
-      <div class="message-card">
-        <p class="message-text">Amee didi, thank you for booking at the Anantya resort. It's been an amazingg experience and thank you for being so patient and helping us throughout♥️
-        So thankful and glad to be doing our all our bookings with you🤗</p>
-        <div class="message-author">Verified Guest</div>
+    <div class="review-slider-wrapper" id="reviewSliderWrapper">
+      <button class="review-arrow review-left-arrow" id="reviewPrevBtn" aria-label="Previous Review">‹</button>
+      <button class="review-arrow review-right-arrow" id="reviewNextBtn" aria-label="Next Review">›</button>
+      
+      <div class="review-slider-track-container">
+        <div class="review-slider-track" id="reviewSliderTrack">
+          <!-- Review Card 1 -->
+          <div class="review-slide-card">
+            <div class="review-card-top">
+              <div class="review-stars">★★★★★</div>
+              <span class="review-verified-tag">✓ Verified Stay</span>
+            </div>
+            <div class="review-quote-mark">“</div>
+            <p class="review-body-text">Amee didi, thank you for booking at the Anantya resort. It's been an amazingg experience and thank you for being so patient and helping us throughout♥️<br/><br/>So thankful and glad to be doing all our bookings with you🤗</p>
+            <div class="review-author-info">
+              <div class="author-avatar-circle">A</div>
+              <div>
+                <div class="author-name">Verified Guest</div>
+                <div class="author-location">Anantya Resort Stay</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review Card 2 -->
+          <div class="review-slide-card">
+            <div class="review-card-top">
+              <div class="review-stars">★★★★★</div>
+              <span class="review-verified-tag">✓ Verified Tour</span>
+            </div>
+            <div class="review-quote-mark">“</div>
+            <p class="review-body-text">A heartfelt thank you to AA Luxe for booking our amazing Thailand trip, covering the beautiful destinations of Bangkok and Krabi. 🇹🇭✨<br/><br/>The entire trip was wonderfully planned, with all the major sightseeing spots covered. The drivers were always punctual, and the smooth, comfortable commute was definitely one of the biggest USPs of the trip. Everything was seamless, well-organised, and hassle-free. We truly had an unforgettable experience! ❤️✈️<br/><br/>Thank you, AA Luxe, for making our Thailand holiday so special!</p>
+            <div class="review-author-info">
+              <div class="author-avatar-circle">T</div>
+              <div>
+                <div class="author-name">Verified Guest</div>
+                <div class="author-location">Bangkok & Krabi Tour</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review Card 3 -->
+          <div class="review-slide-card">
+            <div class="review-card-top">
+              <div class="review-stars">★★★★★</div>
+              <span class="review-verified-tag">✓ Verified Guest</span>
+            </div>
+            <div class="review-quote-mark">“</div>
+            <p class="review-body-text">A big thank you to AA LUXE for planning our beautiful Tamil Nadu trip covering Kanyakumari and Madurai. From seamless bookings to smooth arrangements, everything was perfectly taken care of. Thank you for all the wonderful suggestions and guidance throughout the trip. Truly appreciate the effort in making our journey so comfortable and memorable! ❤️✨</p>
+            <div class="review-author-info">
+              <div class="author-avatar-circle">G</div>
+              <div>
+                <div class="author-name">Gauri</div>
+                <div class="author-location">Tamil Nadu Journey</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review Card 4 -->
+          <div class="review-slide-card">
+            <div class="review-card-top">
+              <div class="review-stars">★★★★★</div>
+              <span class="review-verified-tag">✓ Verified Guest</span>
+            </div>
+            <div class="review-quote-mark">“</div>
+            <p class="review-body-text">A big thank you to AA Luxe for planning our amazing Goa trip! 🌴✨<br/><br/>Everything was so beautifully organised and hassle-free. From the stunning beaches to the fun-filled nights, every moment was memorable. 🌊💃<br/><br/>The perfect mix of relaxation, adventure, music, and masti! 🎶 Thank you for taking care of every little detail and making our trip so special. We truly enjoyed every moment and created memories to cherish forever. ❤️</p>
+            <div class="review-author-info">
+              <div class="author-avatar-circle">S</div>
+              <div>
+                <div class="author-name">Sanjana</div>
+                <div class="author-location">Goa Beach Getaway</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review Card 5 (New Review 1) -->
+          <div class="review-slide-card">
+            <div class="review-card-top">
+              <div class="review-stars">★★★★★</div>
+              <span class="review-verified-tag">✓ Verified Guest</span>
+            </div>
+            <div class="review-quote-mark">“</div>
+            <p class="review-body-text">Just used AA Luxe for a trip and they were fantastic. Booking was completely seamless, and their rates are easily the most pocket-friendly and affordable around. Highly recommend if you want a great, budget-friendly vacation!</p>
+            <div class="review-author-info">
+              <div class="author-avatar-circle">R</div>
+              <div>
+                <div class="author-name">Verified Traveller</div>
+                <div class="author-location">Seamless Budget Luxury Trip</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review Card 6 (New Review 2) -->
+          <div class="review-slide-card">
+            <div class="review-card-top">
+              <div class="review-stars">★★★★★</div>
+              <span class="review-verified-tag">✓ Verified Guest</span>
+            </div>
+            <div class="review-quote-mark">“</div>
+            <p class="review-body-text">Booked our vacation through AA Luxe and the whole process was completely seamless. Their rates are super pocket-friendly and way more affordable than other operators, but the service quality didn't drop at all. Highly recommend for a stress-free, budget trip!</p>
+            <div class="review-author-info">
+              <div class="author-avatar-circle">V</div>
+              <div>
+                <div class="author-name">Verified Vacationer</div>
+                <div class="author-location">Stress-Free Budget Vacation</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="message-card">
-        <p class="message-text">A heartfelt thank you to AA Luxe for booking our amazing Thailand trip, covering the beautiful destinations of Bangkok and Krabi. 🇹🇭✨
-        The entire trip was wonderfully planned, with all the major sightseeing spots covered. The drivers were always punctual, and the smooth, comfortable commute was definitely one of the biggest USPs of the trip.
-        Everything was seamless, well-organised, and hassle-free. We truly had an unforgettable experience! ❤️✈️
-        Thank you, AA Luxe, for making our Thailand holiday so special!</p>
-        <div class="message-author">Verified Guest</div>
-      </div>
-      <div class="message-card">
-        <p class="message-text">A big thank you to AA LUXE for planning our beautiful Tamil Nadu trip covering Kanyakumari and Madurai. From seamless bookings to smooth arrangements, everything was perfectly taken care of. Thank you for all the wonderful suggestions and guidance throughout the trip. Truly appreciate the effort in making our journey so comfortable and memorable! ❤️✨</p>
-        <div class="message-author">Gauri</div>
-      </div>
-      <div class="message-card">
-        <p class="message-text">A big thank you to AA Luxe for planning our amazing Goa trip! 🌴✨
-        Everything was so beautifully organised and hassle-free.
-        From the stunning beaches to the fun-filled nights, every moment was memorable. 🌊💃
-        The perfect mix of relaxation, adventure, music, and masti! 🎶
-        Thank you for taking care of every little detail and making our trip so special.
-        We truly enjoyed every moment and created memories to cherish forever. ❤️</p>
-        <div class="message-author">Sanjana</div>
-      </div>
+
+      <div class="review-pagination" id="reviewPagination"></div>
     </div>
   </div>
 </section>
 
 <section class="why-us">
   <div class="container">
-    <div class="section-label">Why us</div>
-    <h2 class="section-title">The AALUXE Advantage</h2>
+    <div style="text-align: center; margin-bottom: 50px;">
+      <div class="section-label">Why Us</div>
+      <h2 class="section-title" style="margin-bottom: 14px;">The AALUXE Advantage</h2>
+      <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--mid); max-width: 580px; margin: 0 auto; line-height: 1.6;">Privileged access, personal concierge service, and direct owner relationships crafted for discerning travellers.</p>
+    </div>
     <div class="why-grid">
-      <div class="why-card"><div class="why-icon">✦</div><h4>Personal Connections</h4><p>Direct relationships with resort owners means rates no app can match.</p></div>
-      <div class="why-card"><div class="why-icon">◈</div><h4>Curated Selection</h4><p>Every property is personally vetted. No algorithm, only taste.</p></div>
-      <div class="why-card"><div class="why-icon">◉</div><h4>Bespoke Hospitality</h4><p>Personally curated luxury stays tailored for your journey.</p></div>
-      <div class="why-card"><div class="why-icon">◇</div><h4>Dedicated Support</h4><p>Reach us on WhatsApp anytime — before, during, or after your stay.</p></div>
+      <div class="why-card">
+        <div class="why-icon-wrap">✦</div>
+        <h4>Personal Connections</h4>
+        <p>Direct relationships with resort owners mean exclusive rates and privileges no public app can match.</p>
+        <div class="why-card-badge">Privileged Rates</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap">◈</div>
+        <h4>Curated Selection</h4>
+        <p>Every property in our portfolio is personally inspected and vetted for taste, hygiene, and architectural elegance.</p>
+        <div class="why-card-badge">100% Vetted</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap">◉</div>
+        <h4>Bespoke Hospitality</h4>
+        <p>Tailored stays planned around your precise preferences — from private chefs to specialized itineraries.</p>
+        <div class="why-card-badge">Tailored Journeys</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap">◇</div>
+        <h4>Dedicated Support</h4>
+        <p>Direct WhatsApp concierge support available round-the-clock — before, during, and after your getaway.</p>
+        <div class="why-card-badge">24/7 Concierge</div>
+      </div>
     </div>
   </div>
 </section>
@@ -521,7 +765,10 @@
 <footer class="footer">
   <div class="container footer-inner">
     <div class="footer-brand">
-      <a href="index.html" class="logo logo--light"><span class="logo-a">A</span>ALUXE</a>
+      <a href="index.html" class="logo logo--light">
+        <img src="logo.png" alt="AALUXE Logo" class="nav-logo-img" />
+        <span><span class="logo-a">A</span>ALUXE</span>
+      </a>
       <p>Luxury stays & exclusive retreats through personal connections.</p>
     </div>
     <div class="footer-links" id="footerDynamicLinks">
@@ -632,7 +879,7 @@
 </script>
 
 <script>
-// 3D Photo Slideshow Controller (1.jpeg, 2.jpeg, 3.png, 4.jpeg, 5.jpeg, 6.jpeg)
+// 3D Photo Slideshow Controller (1.jpeg, 2.jpeg, 3.png, 4.jpeg, 5.jpeg, 6.jpeg, New Image 1.jpeg, New Image 2.jpeg)
 document.addEventListener('DOMContentLoaded', () => {
   const stage = document.getElementById('testimonialStage');
   const frames = stage ? Array.from(stage.querySelectorAll('.testimonial-frame')) : [];
@@ -680,8 +927,180 @@ document.addEventListener('DOMContentLoaded', () => {
   if (nextBtn) nextBtn.addEventListener('click', () => { moveNext(); startAutoCycle(); });
   if (prevBtn) prevBtn.addEventListener('click', () => { movePrev(); startAutoCycle(); });
 
+  // Directional Touch Swipe Helper with Vertical Scroll Protection
+  function addTouchSwipe(element, onSwipeLeft, onSwipeRight) {
+    if (!element) return;
+    let startX = 0;
+    let startY = 0;
+    let isHorizontalSwipe = false;
+    let isTouchActive = false;
+
+    element.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isHorizontalSwipe = false;
+      isTouchActive = true;
+    }, { passive: true });
+
+    element.addEventListener('touchmove', (e) => {
+      if (!isTouchActive || e.touches.length !== 1) return;
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const deltaX = Math.abs(currentX - startX);
+      const deltaY = Math.abs(currentY - startY);
+
+      // Only lock horizontal swipe if horizontal movement is strictly greater than vertical movement
+      if (!isHorizontalSwipe && deltaX > 10 && deltaX > deltaY) {
+        isHorizontalSwipe = true;
+      }
+
+      if (isHorizontalSwipe && e.cancelable) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    element.addEventListener('touchend', (e) => {
+      if (!isTouchActive) return;
+      isTouchActive = false;
+      if (e.changedTouches.length !== 1) return;
+
+      const endX = e.changedTouches[0].clientX;
+      const endY = e.changedTouches[0].clientY;
+      const deltaX = endX - startX;
+      const deltaY = Math.abs(endY - startY);
+
+      if (Math.abs(deltaX) > 35 && Math.abs(deltaX) > deltaY) {
+        if (deltaX < 0) {
+          onSwipeLeft();
+        } else {
+          onSwipeRight();
+        }
+      }
+    }, { passive: true });
+  }
+
   updateCarouselPosition();
   startAutoCycle();
+  addTouchSwipe(stage, () => { moveNext(); startAutoCycle(); }, () => { movePrev(); startAutoCycle(); });
+
+  // ─── DYNAMIC LUXURY REVIEW CAROUSEL CONTROLLER ──────────────
+  function initReviewSlider() {
+    const track = document.getElementById('reviewSliderTrack');
+    const slides = track ? Array.from(track.querySelectorAll('.review-slide-card')) : [];
+    const prevBtn = document.getElementById('reviewPrevBtn');
+    const nextBtn = document.getElementById('reviewNextBtn');
+    const pagination = document.getElementById('reviewPagination');
+    const wrapper = document.getElementById('reviewSliderWrapper');
+
+    if (!track || slides.length === 0) return;
+
+    let currentIndex = 0;
+    let autoplayTimer;
+
+    function getCardsPerView() {
+      return window.innerWidth <= 768 ? 1 : 2;
+    }
+
+    function getMaxIndex() {
+      const cardsPerView = getCardsPerView();
+      return Math.max(0, slides.length - cardsPerView);
+    }
+
+    function renderDots() {
+      if (!pagination) return;
+      pagination.innerHTML = '';
+      const maxIdx = getMaxIndex();
+      for (let i = 0; i <= maxIdx; i++) {
+        const dot = document.createElement('button');
+        dot.className = `review-dot ${i === currentIndex ? 'active' : ''}`;
+        dot.setAttribute('aria-label', `Go to review slide ${i + 1}`);
+        dot.addEventListener('click', () => {
+          currentIndex = i;
+          updateSlider();
+          restartAutoplay();
+        });
+        pagination.appendChild(dot);
+      }
+    }
+
+    function updateSlider() {
+      const maxIdx = getMaxIndex();
+      if (currentIndex > maxIdx) currentIndex = maxIdx;
+      if (currentIndex < 0) currentIndex = 0;
+
+      const cardsPerView = getCardsPerView();
+      if (cardsPerView === 2) {
+        const shiftPercent = currentIndex * 50;
+        const shiftGap = currentIndex * 12;
+        track.style.transform = `translateX(calc(-${shiftPercent}% - ${shiftGap}px))`;
+      } else {
+        const shiftPercent = currentIndex * 100;
+        const shiftGap = currentIndex * 24;
+        track.style.transform = `translateX(calc(-${shiftPercent}% - ${shiftGap}px))`;
+      }
+
+      if (pagination) {
+        const dots = Array.from(pagination.querySelectorAll('.review-dot'));
+        dots.forEach((dot, idx) => {
+          dot.classList.toggle('active', idx === currentIndex);
+        });
+      }
+    }
+
+    function nextSlide() {
+      const maxIdx = getMaxIndex();
+      if (currentIndex >= maxIdx) {
+        currentIndex = 0;
+      } else {
+        currentIndex++;
+      }
+      updateSlider();
+    }
+
+    function prevSlide() {
+      const maxIdx = getMaxIndex();
+      if (currentIndex <= 0) {
+        currentIndex = maxIdx;
+      } else {
+        currentIndex--;
+      }
+      updateSlider();
+    }
+
+    function startAutoplay() {
+      stopAutoplay();
+      autoplayTimer = setInterval(nextSlide, 5000);
+    }
+
+    function stopAutoplay() {
+      if (autoplayTimer) clearInterval(autoplayTimer);
+    }
+
+    function restartAutoplay() {
+      startAutoplay();
+    }
+
+    if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); restartAutoplay(); });
+    if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); restartAutoplay(); });
+
+    if (wrapper) {
+      wrapper.addEventListener('mouseenter', stopAutoplay);
+      wrapper.addEventListener('mouseleave', startAutoplay);
+      addTouchSwipe(wrapper, () => { nextSlide(); restartAutoplay(); }, () => { prevSlide(); restartAutoplay(); });
+    }
+
+    window.addEventListener('resize', () => {
+      renderDots();
+      updateSlider();
+    });
+
+    renderDots();
+    updateSlider();
+    startAutoplay();
+  }
+
+  initReviewSlider();
 
   // ─── PARALLAX DYNAMIC SCROLL CONTROLLER ───────────────────
   function handleParallaxScroll() {
